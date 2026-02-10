@@ -1,4 +1,4 @@
 .carousel-item img {
-    max-height: 600px;
+    max-height: 500px;
     object-fit: cover; /* para que no se deforme */
 }
