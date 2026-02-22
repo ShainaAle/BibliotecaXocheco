@@ -41,7 +41,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="signin.html">Préstamos</a>
                     </li>
-
+                    <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="UsersView.html">Usuarios</a>
+                    </li>
+                    <?php } ?>
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -51,6 +55,20 @@
         </div>
     </nav>
 
+    <div class="container-fluid">
+        <?php if ($_SESSION['rol'] === 'admin') { ?>
+        <div class="row">
+            <div class="col-md-12 p-2 md-2">
+                <button class="btn btn-sm btn-success">Agregar libro</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 p-2 md-4">
+                <button class="btn btn-sm btn-danger">Eliminar libro</button>
+            </div>
+        </div>
+        <?php } ?>
+    </div>
     <!-- Book cards -->
     <div class="container mt-5">
         <div class="row">

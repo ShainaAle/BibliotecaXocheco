@@ -56,69 +56,42 @@
         </div>
     </nav>
 
-    <h1 class="mb-4">Préstamos activos</h1>
+    <div class="container-fluid">
+        <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') { ?>
+        <div class="row">
+            <div class="col-md-12 p-2 md-2">
+                <button class="btn btn-sm btn-success">Agregar usuario</button>
+            </div>
+        </div>
+        <?php } ?>
+        <?php if ($_SESSION['rol'] === 'admin') { ?>
+        <div class="row">
+            <div class="col-md-12 p-2 md-4">
+                <button class="btn btn-sm btn-danger">Eliminarlibro</button>
+            </div>
+        </div>
+        <?php } ?>
+    </div>
+
+    <h1 class="mb-4">Usuarios</h1>
     <div class="table-responsive mb-5">
         <table class="table table-striped table-bordered align-middle">
             <thead class="table-dark">
                 <tr>
                     <th>ID</th>
-                    <th>Libro</th>
-                    <th>Usuario</th>
-                    <th>Fecha de préstamo</th>
-                    <th>Fecha de devolución</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
                     <th>Estado</th>
+                    <th>Tipo de Usuario</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>001</td>
-                    <td>Cien años de soledad</td>
-                    <td>Juan Pérez</td>
-                    <td>2026-02-01</td>
-                    <td>2026-02-15</td>
-                    <td><span class="badge bg-success">Activo</span></td>
-                </tr>
-                <tr>
-                    <td>002</td>
-                    <td>El Principito</td>
-                    <td>María López</td>
-                    <td>2026-02-05</td>
-                    <td>2026-02-20</td>
-                    <td><span class="badge bg-success">Activo</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <h1 class="mb-4">Historial de préstamos</h1>
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered align-middle">
-            <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Libro</th>
-                    <th>Usuario</th>
-                    <th>Fecha de préstamo</th>
-                    <th>Fecha de devolución</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>010</td>
-                    <td>Don Quijote</td>
-                    <td>Carlos Ramírez</td>
-                    <td>2026-01-10</td>
-                    <td>2026-01-25</td>
-                    <td><span class="badge bg-secondary">Devuelto</span></td>
-                </tr>
-                <tr>
-                    <td>011</td>
-                    <td>La Odisea</td>
-                    <td>Ana Torres</td>
-                    <td>2026-01-15</td>
-                    <td>2026-01-30</td>
-                    <td><span class="badge bg-secondary">Devuelto</span></td>
+                    <td>Juli</td>
+                    <td>juli@example.com</td>
+                    <td>Queretaro</td>
+                    <td>Estudiante</td>
                 </tr>
             </tbody>
         </table>

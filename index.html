@@ -42,7 +42,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="signin.html">Préstamos</a>
                     </li>
-
+                    <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="UsersView.html">Usuarios</a>
+                    </li>
+                    <?php } ?>
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
