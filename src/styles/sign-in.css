@@ -3,8 +3,12 @@ body {
   height: 100%;
 }
 
+.row{
+  margin-bottom: 15px;
+}
+
 .form-signin {
-  max-width: 330px;
+  max-width: 600px;
   padding: 2rem;
   margin: 0 auto;
 }
@@ -83,7 +87,7 @@ body {
   --bs-btn-font-weight: 600;
   --bs-btn-color: var(--bs-white);
   --bs-btn-bg: var(--bd-brown-bg);
-  --bs-btn-border-color: var(---bd-brown-bg);
+  --bs-btn-border-color: var(--bd-brown-bg);
   --bs-btn-hover-color: var(--bs-white);
   --bs-btn-hover-bg: #ca610a;
   --bs-btn-hover-border-color: #7e3900;
@@ -106,7 +110,7 @@ body {
   --bs-btn-font-weight: 600;
   --bs-btn-color: var(--bs-white);
   --bs-btn-bg: var(--bd-brown-bg);
-  --bs-btn-border-color: var(---bd-brown-bg);
+  --bs-btn-border-color: var(--bd-brown-bg);
   --bs-btn-hover-color: var(--bs-white);
   --bs-btn-hover-bg: #ca610a;
   --bs-btn-hover-border-color: #7e3900;

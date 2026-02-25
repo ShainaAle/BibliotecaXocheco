@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sistema de préstamos de la Biblioteca Xocheco.">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link href="src\styles\styleIndex.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link href="src/styles/sign-in.css" rel="stylesheet">
+    <title>Nuevo Usuario</title>
+</head>
+
+<body>
+    <!-- Nav Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Xocheco</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="books.html">Libros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="prestamosUser.html">Préstamos</a>
+                    </li>
+                    <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="UsersView.html">Usuarios</a>
+                    </li>
+                    <?php } ?>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <main class="form-signin w-100 m-auto">
+        <form action="registerForm.html" method="PUT">
+            <div style="text-align: center;">
+                <a href="index.html">
+                    <img class="mb-4" src="src\Images\Logo.png" alt="" width="72" height="57">
+                </a>
+                <h1 class="h3 mb-3 fw-normal">Agrega un nuevo usuario</h1>
+            </div>
+
+            <div class="cointainer-fluid bg-light">
+                <div class="row">
+                    <div class="col-md-6 form-floating">
+                        <input type="name" class="form-control" id="floatingInput" name="name">
+                        <label for="floatingInput">Nombre</label>
+                    </div>
+                    <div class="col-md-6 form-floating">
+                        <input type="email" class="form-control" id="floatingInput" name="email">
+                        <label for="floatingInput">Correo</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-floating">
+                        <input type="password" class="form-control" id="floatingPassword" name="password">
+                        <label for="floatingPassword">Contraseña</label>
+                    </div>
+                    <div class="col-md-6 form-floating">
+                        <input type="password" class="form-control" id="floatingPassword" name="confirmPassword">
+                        <label for="floatingPassword">Confirmar Contraseña</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-floating">
+                        <input class="form-control" id="floatingPassword" name="userType">
+                        <label for="floatingPassword">Tipo de usuario</label>
+                    </div>
+                    <div class="col-md-6 form-floating">
+                        <input class="form-control" id="floatingPassword" name="state">
+                        <label for="floatingPassword">Estado</label>
+                    </div>
+                </div>
+                <h3>Domicilio</h3>
+                <div class="row">
+                    <div class="col-md-6 form-floating">
+                        <input class="form-control" id="floatingPassword" name="street">
+                        <label for="floatingPassword">Calle</label>
+                    </div>
+                    <div class="col-md-6 form-floating">
+                        <input class="form-control" id="floatingPassword" name="extNumber">
+                        <label for="floatingPassword">Número exterior</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-floating">
+                        <input class="form-control" id="floatingPassword" name="intNumber">
+                        <label for="floatingPassword">Número interior</label>
+                    </div>
+                    <div class="col-md-6 form-floating">
+                        <input class="form-control" id="floatingPassword" name="neighborhood">
+                        <label for="floatingPassword">Colonia</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-floating">
+                        <input class="form-control" id="floatingPassword" name="postalCode">
+                        <label for="floatingPassword">Código postal</label>
+                    </div>
+                    <div class="col-md-6 form-floating">
+                        <input class="form-control" id="floatingPassword" name="city">
+                        <label for="floatingPassword">Ciudad</label>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary w-100 py-2" type="submit">Registrar</button>
+        </form>
+    </main>
+</body>
+
+</html>
