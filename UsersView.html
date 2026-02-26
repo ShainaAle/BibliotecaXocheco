@@ -78,6 +78,7 @@
         <table class="table table-striped table-bordered align-middle">
             <thead class="table-dark">
                 <tr>
+                    <th><input type="checkbox" id="selectAll"></th> <!-- Seleccionar todos -->
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Correo</th>
@@ -87,15 +88,47 @@
             </thead>
             <tbody>
                 <tr>
+                    <td><input type="checkbox" class="userCheckbox" value="001"></td>
                     <td>001</td>
                     <td>Juli</td>
                     <td>juli@example.com</td>
                     <td>Queretaro</td>
                     <td>Estudiante</td>
                 </tr>
+                <!-- Aquí agregas más usuarios -->
             </tbody>
         </table>
+
     </div>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container text-center">
+            <div class="row">
+                <!-- Columna izquierda -->
+                <div class="col-md-4 mb-3">
+                    <h5>Xocheco Biblioteca</h5>
+                    <p class="small">Conocimiento y comunidad al alcance de todos.</p>
+                </div>
+                <!-- Columna central -->
+                <div class="col-md-4 mb-3">
+                    <h6>Enlaces útiles</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-light text-decoration-none">Inicio</a></li>
+                        <li><a href="books.html" class="text-light text-decoration-none">Libros</a></li>
+                        <li><a href="signin.html" class="text-light text-decoration-none">Préstamos</a></li>
+                    </ul>
+                </div>
+                <!-- Columna derecha -->
+                <div class="col-md-4 mb-3">
+                    <h6>Contacto</h6>
+                    <p class="small mb-1">Correo: contacto@xocheco.com</p>
+                    <p class="small">Tel: +52 442 123 4567</p>
+                </div>
+            </div>
+            <hr class="border-light">
+            <p class="small mb-0">&copy; 2026 Xocheco Biblioteca. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
