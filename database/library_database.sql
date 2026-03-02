@@ -58,9 +58,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`books` (
   `id_genre` INT NOT NULL,
   `synopsis` TEXT NULL,
   PRIMARY KEY (`id_book`),
-  UNIQUE INDEX `ISBN_UNIQUE` (`isbn` ASC) VISIBLE,
-  INDEX `fk_Libros_Editoriales1_idx` (`id_publisher` ASC) VISIBLE,
-  INDEX `fk_Libros_Generos1_idx` (`id_genre` ASC) VISIBLE,
+  UNIQUE INDEX `ISBN_UNIQUE` (`isbn`),
+  INDEX `fk_Libros_Editoriales1_idx` (`id_publisher`),
+  INDEX `fk_Libros_Generos1_idx` (`id_genre`),
   CONSTRAINT `fk_books_publishers`
     FOREIGN KEY (`id_publisher`)
     REFERENCES `mydb`.`publishers` (`id_publisher`)
@@ -80,8 +80,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`book_authors` (
   `id_author` INT NOT NULL,
   `id_book` INT NOT NULL,
-  INDEX `fk_Autores_has_Libros_Autores1_idx` (`id_author` ASC) VISIBLE,
-  INDEX `fk_Libro_autor_Libros_idx` (`id_book` ASC) VISIBLE,
+  INDEX `fk_Autores_has_Libros_Autores1_idx` (`id_author`),
+  INDEX `fk_Libro_autor_Libros_idx` (`id_book`),
   PRIMARY KEY (`id_author`, `id_book`),
   CONSTRAINT `fk_book_author_authors`
     FOREIGN KEY (`id_author`)
@@ -146,10 +146,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`users` (
   `id_role` INT NOT NULL,
   `active` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id_user`),
-  UNIQUE INDEX `Correo_UNIQUE` (`email` ASC) VISIBLE,
-  INDEX `fk_Usuarios_Tipo_usuario1_idx` (`id_user_type` ASC) VISIBLE,
-  INDEX `fk_Usuarios_Domicilio1_idx` (`id_address` ASC) VISIBLE,
-  INDEX `fk_Usuarios_Roles1_idx` (`id_role` ASC) VISIBLE,
+  UNIQUE INDEX `Correo_UNIQUE` (`email`),
+  INDEX `fk_Usuarios_Tipo_usuario1_idx` (`id_user_type`),
+  INDEX `fk_Usuarios_Domicilio1_idx` (`id_address`),
+  INDEX `fk_Usuarios_Roles1_idx` (`id_role`),
   CONSTRAINT `fk_users_user_types`
     FOREIGN KEY (`id_user_type`)
     REFERENCES `mydb`.`user_types` (`id_user_type`)
@@ -179,8 +179,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`bookings` (
   `availability_alert` TINYINT(1) NOT NULL DEFAULT 0,
   `status` ENUM('En Espera', 'Listo para entrega', 'Cancelado') NOT NULL,
   PRIMARY KEY (`id_booking`),
-  INDEX `fk_Reservas_Libros1_idx` (`id_book` ASC) VISIBLE,
-  INDEX `fk_Reservas_Usuarios1_idx` (`id_user` ASC) VISIBLE,
+  INDEX `fk_Reservas_Libros1_idx` (`id_book`),
+  INDEX `fk_Reservas_Usuarios1_idx` (`id_user`),
   CONSTRAINT `fk_bookings_books`
     FOREIGN KEY (`id_book`)
     REFERENCES `mydb`.`books` (`id_book`)
@@ -206,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`logs` (
   `new_data` JSON NULL,
   `movement_timestamp` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_log`),
-  INDEX `fk_Accesos_Usuarios1_idx` (`id_user` ASC) VISIBLE,
+  INDEX `fk_Accesos_Usuarios1_idx` (`id_user`),
   CONSTRAINT `fk_logs_users`
     FOREIGN KEY (`id_user`)
     REFERENCES `mydb`.`users` (`id_user`)
@@ -232,8 +232,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`roles_permissions` (
   `id_role` INT NOT NULL,
   `id_permission` INT NOT NULL,
-  INDEX `fk_Roles_has_Permisos_Permisos1_idx` (`id_permission` ASC) VISIBLE,
-  INDEX `fk_Roles_has_Permisos_Roles1_idx` (`id_role` ASC) VISIBLE,
+  INDEX `fk_Roles_has_Permisos_Permisos1_idx` (`id_permission`),
+  INDEX `fk_Roles_has_Permisos_Roles1_idx` (`id_role`),
   PRIMARY KEY (`id_permission`, `id_role`),
   CONSTRAINT `fk_roles_has_permissions_roles`
     FOREIGN KEY (`id_role`)
@@ -261,8 +261,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`copies` (
   `status` ENUM('Disponible', 'Prestado', 'En reparación', 'No disponible', 'Dañado') NOT NULL,
   `notes` VARCHAR(150) NULL,
   PRIMARY KEY (`id_copy`),
-  INDEX `fk_Ejemplares_Libros1_idx` (`id_book` ASC) VISIBLE,
-  UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE,
+  INDEX `fk_Ejemplares_Libros1_idx` (`id_book`),
+  UNIQUE INDEX `code_UNIQUE` (`code`),
   CONSTRAINT `fk_copies_books`
     FOREIGN KEY (`id_book`)
     REFERENCES `mydb`.`books` (`id_book`)
@@ -283,9 +283,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`loans` (
   `return_deadline` DATE NOT NULL,
   `status` ENUM('Activo', 'Finalizado', 'Con adeudo', 'Cancelado') NOT NULL,
   PRIMARY KEY (`id_loan`),
-  INDEX `fk_Prestamos_Usuarios1_idx` (`id_user` ASC) VISIBLE,
-  INDEX `fk_Prestamos_Reservas1_idx` (`id_booking` ASC) VISIBLE,
-  INDEX `fk_Prestamos_Ejemplares1_idx` (`id_copy` ASC) VISIBLE,
+  INDEX `fk_Prestamos_Usuarios1_idx` (`id_user`),
+  INDEX `fk_Prestamos_Reservas1_idx` (`id_booking`),
+  INDEX `fk_Prestamos_Ejemplares1_idx` (`id_copy`),
   CONSTRAINT `fk_loans_users`
     FOREIGN KEY (`id_user`)
     REFERENCES `mydb`.`users` (`id_user`)
@@ -313,8 +313,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`returns` (
   `return_date` DATE NOT NULL,
   `notes` VARCHAR(100) NULL,
   PRIMARY KEY (`id_return`),
-  INDEX `fk_Devoluciones_Prestamos1_idx` (`id_loan` ASC) VISIBLE,
-  UNIQUE INDEX `id_prestamo_UNIQUE` (`id_loan` ASC) VISIBLE,
+  INDEX `fk_Devoluciones_Prestamos1_idx` (`id_loan`),
+  UNIQUE INDEX `id_prestamo_UNIQUE` (`id_loan`),
   CONSTRAINT `fk_returns_loans`
     FOREIGN KEY (`id_loan`)
     REFERENCES `mydb`.`loans` (`id_loan`)
@@ -334,7 +334,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`fines` (
   `status` ENUM('Pagada', 'Pendiente', 'Cancelada') NOT NULL,
   `payment_date` DATE NULL,
   PRIMARY KEY (`id_fine`),
-  INDEX `fk_Multas_Devoluciones1_idx` (`id_return` ASC) VISIBLE,
+  INDEX `fk_Multas_Devoluciones1_idx` (`id_return`),
   CONSTRAINT `fk_fines_returns`
     FOREIGN KEY (`id_return`)
     REFERENCES `mydb`.`returns` (`id_return`)
@@ -352,7 +352,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`login_history` (
   `login_timestamp` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` ENUM('Exitoso', 'Fallido') NOT NULL,
   PRIMARY KEY (`id_login`),
-  INDEX `fk_login_history_users1_idx` (`id_user` ASC) VISIBLE,
+  INDEX `fk_login_history_users1_idx` (`id_user`),
   CONSTRAINT `fk_login_history_users1`
     FOREIGN KEY (`id_user`)
     REFERENCES `mydb`.`users` (`id_user`)
