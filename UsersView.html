@@ -44,7 +44,7 @@
                     </li>
                     <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="UsersView.html">Usuarios</a>
+                        <a class="nav-link" href="prestamosView.html">Usuarios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="autorsAndEditorials.html">Autores y Editoriales</a>
@@ -70,7 +70,7 @@
         <?php if ($_SESSION['rol'] === 'admin') { ?>
         <div class="row">
             <div class="col-md-12 p-2 md-4">
-                <button class="btn btn-sm btn-danger">Eliminar Usuario</button>
+                <button class="btn btn-sm btn-danger">Modificar Usuario</button>
             </div>
         </div>
         <?php } ?>

@@ -39,7 +39,7 @@
                         <a class="nav-link" href="books.html">Libros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="prestamosUser.html">Préstamos</a>
+                        <a class="nav-link" href="prestamosView.html">Préstamos</a>
                     </li>
                     <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') { ?>
                     <li class="nav-item">
@@ -73,6 +73,7 @@
                     <label for="floatingInput">Nombre</label>
                 </div>
                 <button class="btn btn-primary w-100 py-2 my-4" type="submit">Agregar</button>
+            </div>
         </form>
     </main>
 
