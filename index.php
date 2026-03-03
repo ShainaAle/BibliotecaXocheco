@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("src/conexion/conexion.php");
 ?>
 <!doctype html>
@@ -55,18 +56,15 @@ include("src/conexion/conexion.php");
                     <?php } ?>
                 </ul>
                 <div class="d-flex">
-                    <?php if (isset($_SESSION['id_user'])) { ?>
-                            <span class="navbar-text me-3">
-                                Hola, <?php echo isset($_SESSION['nombre_completo']) ? explode(' ', $_SESSION['nombre_completo'])[0] : 'Usuario'; ?>
-                            </span>
-
-                            <a href="logout.php" class="btn btn-outline-danger">Cerrar Sesión</a>
-
-                        <?php } else { ?>
-                            <a href="signin.php" class="btn btn-primary">Iniciar Sesión</a>
-
-                        <?php } ?>
-                /div>
+                <?php if (isset($_SESSION['id_user'])) { ?>
+                        <span class="navbar-text me-3">
+                            Hola, <?php echo isset($_SESSION['nombre_completo']) ? explode(' ', $_SESSION['nombre_completo'])[0] : 'Usuario'; ?>
+                        </span>
+                        <a href="logout.php" class="btn btn-outline-danger">Cerrar Sesión</a>
+                    <?php } else { ?>
+                        <a href="signin.php" class="btn btn-primary">Iniciar Sesión</a>
+                    <?php } ?>
+                </div>
             </div>
         </div>
     </nav>
@@ -151,5 +149,4 @@ include("src/conexion/conexion.php");
         </div>
     </footer>
 </body>
-
 </html>

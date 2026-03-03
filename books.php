@@ -121,7 +121,7 @@ $result = $conn->query($sql);
 
                             <?php 
                                 // --- PEGA AQUÍ EL BLOQUE DE LÓGICA DE ARRIBA ---
-                                $rutaSolicitud = "signin.html"; 
+                                $rutaSolicitud = "signin.php"; 
                                 $textoBoton = "Solicitar";
                             
                                 if (isset($_SESSION['rol'])) {
@@ -178,7 +178,7 @@ $result = $conn->query($sql);
                     <ul class="list-unstyled">
                         <li><a href="index.php" class="text-light text-decoration-none">Inicio</a></li>
                         <li><a href="books.php" class="text-light text-decoration-none">Libros</a></li>
-                        <li><a href="signin.html" class="text-light text-decoration-none">Préstamos</a></li>
+                        <li><a href="singnin.php" class="text-light text-decoration-none">Préstamos</a></li>
                     </ul>
                 </div>
                 <!-- Columna derecha -->

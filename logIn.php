@@ -40,12 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['rol'] = $rol_bd; 
             }
 
-            // 4. REDIRECCIÓN SEGÚN ROL (La lógica que pediste)
-            if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') {
-                header("Location: index.php"); // O .php
-            } else {
-                header("Location: prestamosView.html");
-            }
+            // 4. REDIRECCIÓN 
+            header("Location: index.php"); 
             exit();
 
         } else {
