@@ -1,3 +1,17 @@
+<?php
+session_start();
+require 'src/conexion/conexion.php';
+
+$sql = "SELECT b.*, 
+        GROUP_CONCAT(a.full_name SEPARATOR ', ') as nombre_autor
+        FROM books b
+        LEFT JOIN book_authors ba ON b.id_book = ba.id_book
+        LEFT JOIN authors a ON ba.id_author = a.id_author
+        GROUP BY b.id_book";
+
+$result = $conn->query($sql);
+?>
+
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
 
@@ -23,7 +37,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="index.html">Xocheco</a>
+      <a class="navbar-brand" href="index.php">Xocheco</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -31,7 +45,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+            <a class="nav-link active" aria-current="page" href="index.php">Inicio</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="books.php">Libros</a>
@@ -39,13 +53,13 @@
           <li class="nav-item">
             <a class="nav-link" href="prestamosView.html">Préstamos</a>
           </li>
-          <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') { ?>
-          <li class="nav-item">
-            <a class="nav-link" href="UsersView.html">Usuarios</a>
-          </li>
-          <li class="nav-item">
-                        <a class="nav-link" href="autorsAndEditorials.html">Autores y Editoriales</a>
-                    </li>
+          <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin') { ?>
+            <li class="nav-item">
+                <a class="nav-link" href="UsersView.html">Usuarios</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="autorsAndEditorials.html">Autores y Editoriales</a>
+            </li>
           <?php } ?>
         </ul>
         <form class="d-flex">
@@ -129,12 +143,16 @@
     <main class="form-signin w-100 m-auto">
       <form action="login.php" method="POST">
         <div style="text-align: center;">
-          <a href="index.html">
+          <a href="index.php">
             <img class="mb-4" src="src\Images\Logo.png" alt="" width="72" height="57">
           </a>
           <h1 class="h3 mb-3 fw-normal">Inicio de sesión</h1>
         </div>
-
+        <?php 
+          if (isset($_GET['error'])) {
+              echo '<div class="alert alert-danger">Correo o contraseña incorrectos</div>';
+          }
+          ?>
         <div class="form-floating">
           <input type="email" class="form-control" id="floatingInput" name="email">
           <label for="floatingInput">Correo</label>
@@ -167,7 +185,7 @@
         <div class="col-md-4 mb-3">
           <h6>Enlaces útiles</h6>
           <ul class="list-unstyled">
-            <li><a href="index.html" class="text-light text-decoration-none">Inicio</a></li>
+            <li><a href="index.php" class="text-light text-decoration-none">Inicio</a></li>
             <li><a href="books.php" class="text-light text-decoration-none">Libros</a></li>
             <li><a href="signin.html" class="text-light text-decoration-none">Préstamos</a></li>
           </ul>

@@ -1,3 +1,6 @@
+<?php
+include("src/conexion/conexion.php");
+?>
 <!doctype html>
 <html lang="en">
 
@@ -25,7 +28,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">Xocheco</a>
+            <a class="navbar-brand" href="index.php">Xocheco</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -34,7 +37,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+                        <a class="nav-link active" aria-current="page" href="index.php">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="books.php">Libros</a>
@@ -42,7 +45,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="prestamosView.html">Préstamos</a>
                     </li>
-                    <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') { ?>
+                    <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin') { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="UsersView.html">Usuarios</a>
                     </li>
@@ -51,10 +54,19 @@
                     </li>
                     <?php } ?>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                <div class="d-flex">
+                    <?php if (isset($_SESSION['id_user'])) { ?>
+                            <span class="navbar-text me-3">
+                                Hola, <?php echo isset($_SESSION['nombre_completo']) ? explode(' ', $_SESSION['nombre_completo'])[0] : 'Usuario'; ?>
+                            </span>
+
+                            <a href="logout.php" class="btn btn-outline-danger">Cerrar Sesión</a>
+
+                        <?php } else { ?>
+                            <a href="signin.php" class="btn btn-primary">Iniciar Sesión</a>
+
+                        <?php } ?>
+                /div>
             </div>
         </div>
     </nav>
@@ -122,7 +134,7 @@
                 <div class="col-md-4 mb-3">
                     <h6>Enlaces útiles</h6>
                     <ul class="list-unstyled">
-                        <li><a href="index.html" class="text-light text-decoration-none">Inicio</a></li>
+                        <li><a href="index.php" class="text-light text-decoration-none">Inicio</a></li>
                         <li><a href="books.php" class="text-light text-decoration-none">Libros</a></li>
                         <li><a href="signin.html" class="text-light text-decoration-none">Préstamos</a></li>
                     </ul>
