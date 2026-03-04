@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`bookings` (
   `id_book` INT NOT NULL,
   `booking_date` DATE NOT NULL,
   `availability_alert` TINYINT(1) NOT NULL DEFAULT 0,
-  `status` ENUM('En Espera', 'Listo para entrega', 'Cancelado') NOT NULL,
+  `status` ENUM('En Espera', 'Listo para entrega', 'Entregado', 'Cancelado',) NOT NULL,
   PRIMARY KEY (`id_booking`),
   INDEX `fk_Reservas_Libros1_idx` (`id_book`),
   INDEX `fk_Reservas_Usuarios1_idx` (`id_user`),
