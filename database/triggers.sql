@@ -8,11 +8,6 @@
 
 USE mydb;
 
-ALTER TABLE bookings
-MODIFY COLUMN status
-ENUM('En Espera', 'Listo para entrega', 'Entregado', 'Cancelado', 'Finalizado') NOT NULL;
-
-
 -- =============================================
 -- AUX Function: fn_add_business_days
 -- Calculate a date by adding N business days.
@@ -276,6 +271,7 @@ BEGIN
     DECLARE v_days_late       INT;
     DECLARE v_fine_amount     DECIMAL(5,2);
     DECLARE v_next_booking    INT;
+    DECLARE v_existing_fine   INT; -- NEW: save pre-existing fine id
 
     -- Obtain related loan details
     SELECT id_user, id_copy, id_booking, return_deadline
@@ -296,15 +292,39 @@ BEGIN
 
     -- 2. Calculate days of delay
     SET v_days_late = DATEDIFF(NEW.return_date, v_return_deadline);
-
     IF v_days_late > 0 THEN
 
         -- 3a. calculate fine
         SET v_fine_amount = v_days_late * 25.00;
+        -- =============================================
+        -- NEW BLOCK
+        -- Check if the EVENT has already created an 
+        -- outstanding penalty for this loan
+        -- =============================================
+        SELECT id_fine INTO v_existing_fine
+        FROM fines
+        WHERE id_loan = NEW.id_loan
+            AND status = 'Pendiente'
+        LIMIT 1;
 
-        -- 3b. register fine
-        INSERT INTO fines (id_return, fine_date, amount, status, payment_date)
-        VALUES (NEW.id_return, NEW.return_date, v_fine_amount, 'Pendiente', NULL);
+        IF v_existing_fine IS NOT NULL THEN
+            -- The EVENT already generated the fine; just
+            -- link it to this return and adjust the final amount.
+            UPDATE fines
+            SET id_return  = NEW.id_return,
+                amount     = v_fine_amount,
+                fine_date  = NEW.return_date
+            WHERE id_fine = v_existing_fine;
+        ELSE
+            -- There was no previous fine, create it
+            -- 3b. register fine
+            INSERT INTO fines (id_loan, id_return, fine_date, amount, status, payment_date)
+            VALUES (NEW.id_loan, NEW.id_return, NEW.return_date, v_fine_amount, 'Pendiente', NULL);
+        END IF;
+
+        -- =============================================
+        -- END OF THE NEW BLOCK
+        -- =============================================
 
         -- 3c. Update loan status with 'Con adeudo'
         UPDATE loans

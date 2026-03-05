@@ -16,3 +16,8 @@ CHECK (
 ALTER TABLE loans
 ADD CONSTRAINT chk_dates_valid
 CHECK (return_deadline >= start_date);
+
+
+-- constraint to validate to ensure every fine has an id_loan
+ALTER TABLE fines ADD CONSTRAINT chk_fines_needs_loan 
+CHECK (id_loan IS NOT NULL);

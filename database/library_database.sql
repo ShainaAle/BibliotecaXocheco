@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`bookings` (
   `id_book` INT NOT NULL,
   `booking_date` DATE NOT NULL,
   `availability_alert` TINYINT(1) NOT NULL DEFAULT 0,
-  `status` ENUM('En Espera', 'Listo para entrega', 'Entregado', 'Cancelado',) NOT NULL,
+  `status` ENUM('En Espera', 'Listo para entrega', 'Entregado', 'Cancelado','Finalizado') NOT NULL,
   PRIMARY KEY (`id_booking`),
   INDEX `fk_Reservas_Libros1_idx` (`id_book`),
   INDEX `fk_Reservas_Usuarios1_idx` (`id_user`),
@@ -328,7 +328,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`fines` (
   `id_fine` INT NOT NULL AUTO_INCREMENT,
-  `id_return` INT NOT NULL,
+  `id_loan` INT NULL,
+  `id_return` INT NULL,
   `fine_date` DATE NOT NULL,
   `amount` DECIMAL(5,2) NOT NULL,
   `status` ENUM('Pagada', 'Pendiente', 'Cancelada') NOT NULL,
@@ -338,6 +339,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`fines` (
   CONSTRAINT `fk_fines_returns`
     FOREIGN KEY (`id_return`)
     REFERENCES `mydb`.`returns` (`id_return`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_fines_loans`
+    FOREIGN KEY (`id_loan`)
+    REFERENCES `mydb`.`loans` (`id_loan`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
