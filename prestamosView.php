@@ -38,7 +38,6 @@ if ($user_role === 'Administrador' || $user_role === 'Bibliotecario' || $user_ro
 
 } else {
     // Normal users can only see their own loans
-    // $active_query = "SELECT l.id_loan, b.title, CONCAT(u.name, ' ', u.last_name) as usuario, l.start_date, l.return_deadline, l.status 
     $active_query = "SELECT l.id_loan, b.title, l.start_date, l.return_deadline, l.status 
         FROM loans l
         INNER JOIN copies c ON l.id_copy = c.id_copy
@@ -283,12 +282,10 @@ $fines_result = mysqli_query($conn, $fines_query);
     <footer class="bg-dark text-light py-4 mt-5">
         <div class="container text-center">
             <div class="row">
-                <!-- Columna izquierda -->
                 <div class="col-md-4 mb-3">
                     <h5>Xocheco Biblioteca</h5>
                     <p class="small">Conocimiento y comunidad al alcance de todos.</p>
                 </div>
-                <!-- Columna central -->
                 <div class="col-md-4 mb-3">
                     <h6>Enlaces útiles</h6>
                     <ul class="list-unstyled">
@@ -297,7 +294,6 @@ $fines_result = mysqli_query($conn, $fines_query);
                         <li><a href="signin.php" class="text-light text-decoration-none">Préstamos</a></li>
                     </ul>
                 </div>
-                <!-- Columna derecha -->
                 <div class="col-md-4 mb-3">
                     <h6>Contacto</h6>
                     <p class="small mb-1">Correo: contacto@xocheco.com</p>
