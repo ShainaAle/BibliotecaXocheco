@@ -1,3 +1,60 @@
+<?php
+session_start();
+//Verify if user is logged in
+if (!isset($_SESSION['id_user'])) {
+    header("Location: signin.php");
+    exit();
+}
+
+//Verify if user has permission to access this page, if not, redirect to index.php
+$rol = $_SESSION['rol'] ?? '';
+if ($rol !== 'admin' && $rol !== 'bibliotecario' && $rol !== 'Administrador' && $rol !== 'Bibliotecario') {
+    header("Location: index.php");
+    exit();
+}
+
+include('src/conexion/conexion.php');
+
+$alert_message = "";
+
+//Insert processing
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id_copy = $_POST['copy'];
+    $id_user = $_POST['user'];
+    // Verify if reservation ID is provided, if not, set it to null
+    $id_booking = !empty($_POST['reservation']) ? $_POST['reservation'] : null;
+    $start_date = date('Y-m-d');
+
+    // The return date is calculated by the 'trg_before_loan_insert' trigger in the database
+    $insert_query = "INSERT INTO loans (id_user, id_booking, id_copy, start_date, return_deadline, status)
+        VALUES ($id_user, $id_booking, $id_copy, '$start_date', '$start_date, 'Activo')";
+    
+    if (mysqli_query($conn, $insert_query)) {
+        $alert_message = "<div class='alert alert-success mt-3'>¡Préstamo registrado exitosamente! La base de datos calculó la fecha de devolución automáticamente.</div>";
+    } else {
+        $alert_message = "<div class='alert alert-danger mt-3'>Error al registrar el préstamo: " . mysqli_error($conn) . "</div>";
+    }
+}
+
+// Querys to populate dropdowns
+// Get ONLY available copies
+$query_copies = "SELECT c.id_copy, b.title, c.edition, c.code
+    FROM copies c 
+    INNER JOIN books b ON c.id_book = b.id_book
+    WHERE c.status = 'Disponible'
+    ORDER BY b.title ASC";
+
+$result_copies = mysqli_query($conn, $query_copies) or die("Error SQL in Copies: " . mysqli_error($conn));
+
+// Get ONLY active users
+$query_users = "SELECT id_user, name, last_name, email
+    FROM users 
+    WHERE active = 1 AND (id_role = (SELECT id_role FROM roles WHERE name = 'Usuario'))
+    ORDER BY name ASC";
+
+$result_users = mysqli_query($conn, $query_users) or die("Error SQL in Users: " . mysqli_error($conn));
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -17,7 +74,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <link href="src/styles/sign-in.css" rel="stylesheet">
-    <title>Nuevo Préstamo</title>
+    <title>Nuevo Préstamo - Xocheco</title>
 </head>
 
 <body>
@@ -59,35 +116,43 @@
     </nav>
 
     <main class="form-signin w-100 m-auto">
-        <form action="editorialForm.html" method="PUT">
+        <form action="" method="POST">
             <div style="text-align: center;">
                 <a href="index.php">
                     <img class="mb-4" src="src\Images\Logo.png" alt="" width="72" height="57">
                 </a>
                 <h1 class="h3 mb-3 fw-normal">Nuevo Préstamo</h1>
+                <p class="text-muted">Selecciona el libro, el usuario y el sistema hará el resto.</p>
             </div>
 
-            <div class="cointainer-fluid bg-light">
-                <div class="row">
-                    <div class="col-md-6 form-floating">
-                        <input class="form-control" id="floatingInput" name="copy">
-                        <label for="floatingInput">Ejemplar (ID)</label>
-                    </div>
-                    <div class="col-md-6 form-floating">
-                        <input class="form-control" id="floatingInput" name="user">
-                        <label for="floatingInput">Usuario (ID)</label>
-                    </div>
+            <?php echo $alert_message; ?>
+
+            <div class= "row g-3 mt-2">
+                <div class= "col-md-12 form-floating">
+                    <select class= "form-select" id="copy" name="copy" required>
+                        <option value="" disabled selected>Selecciona un libro disponible</option>
+                        <?php while ($copy = mysqli_fetch_assoc($result_copies)) { ?>
+                            <option value="<?php echo $copy['id_copy']; ?>">
+                                [ID: <?php echo $copy['id_copy']; ?>] - <?php echo $copy['title']; ?> (<?php echo $copy['edition']; ?>) - Cód: <?php echo $copy['code']; ?>
+                            </option>
+                        <?php } ?>
+                    </select>
+                    <label for="copy">Libro a prestar</label>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 form-floating">
-                        <input class="form-control" id="floatingPassword" name="reservation">
-                        <label for="floatingPassword">Reservación (ID) - Opcional </label>
-                    </div>
-                    <div class="col-md-6 form-floating">
-                        <input type="datetime" class="form-control" id="floatingInput" name="confirmPassword">
-                        <label for="floatingInput">Fecha de devolución</label>
-                    </div>
+
+                <div class= "col-md-12 form-floating">
+                    <select class= "form-select" id="user" name="user" required>
+                        <option value="" disabled selected>Selecciona un usuario</option>
+                        <?php while ($user = mysqli_fetch_assoc($result_users)) { ?>
+                            <option value="<?php echo $user['id_user']; ?>">
+                                [ID: <?php echo $user['id_user']; ?>] - <?php echo $user['name'] . ' ' . $user['last_name']; ?> (<?php echo $user['email']; ?>)
+                            </option>
+                        <?php } ?>
+                    </select>
+                    <label for="user">Usuario que solicita el préstamo</label>
                 </div>
+
+                 
             </div>
             <button class="btn btn-primary w-100 py-2" type="submit">Crear</button>
         </form>
