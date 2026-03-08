@@ -14,14 +14,14 @@ $user_role = $_SESSION['rol'] ?? 'normal_user'; // Default to 'normal_user' if '
 // Prepare the SQL query based on the user's role
 if ($user_role === 'Administrador' || $user_role === 'Bibliotecario' || $user_role === 'admin' || $user_role === 'bibliotecario') {
     // Admins and librarians can see all loans
-    $active_query = "SELECT l.id_loan, b.title, CONCAT(u.name, ' ', u.last_name) as usuario, l.start_date, l.status, l.return_deadline
+    $active_query = "SELECT l.id_loan, b.title, c.id_copy, CONCAT(u.name, ' ', u.last_name) as usuario, l.start_date, l.status, l.return_deadline
         FROM loans l
         INNER JOIN copies c ON l.id_copy = c.id_copy
         INNER JOIN books b ON c.id_book = b.id_book
         INNER JOIN users u ON l.id_user = u.id_user
         WHERE l.status IN ('Activo', 'Con adeudo')";
 
-    $historical_query = "SELECT l.id_loan, b.title, CONCAT(u.name, ' ', u.last_name) as usuario, l.start_date, l.return_deadline, l.status, r.return_date
+    $historical_query = "SELECT l.id_loan, b.title, c.id_copy, CONCAT(u.name, ' ', u.last_name) as usuario, l.start_date, l.return_deadline, l.status, r.return_date
         FROM loans l
         INNER JOIN copies c ON l.id_copy = c.id_copy
         INNER JOIN books b ON c.id_book = b.id_book
@@ -29,7 +29,7 @@ if ($user_role === 'Administrador' || $user_role === 'Bibliotecario' || $user_ro
         INNER JOIN returns r ON l.id_loan = r.id_loan
         WHERE l.status IN ('Finalizado', 'Cancelado')";
 
-    $fines_query = "SELECT f.id_fine, b.title, CONCAT(u.name, ' ', u.last_name) as usuario, f.fine_date, f.amount, f.status, f.payment_date
+    $fines_query = "SELECT f.id_fine, b.title, c.id_copy, CONCAT(u.name, ' ', u.last_name) as usuario, f.fine_date, f.amount, f.status, f.payment_date
         FROM fines f
         INNER JOIN loans l ON f.id_loan = l.id_loan
         INNER JOIN copies c ON l.id_copy = c.id_copy
@@ -38,7 +38,7 @@ if ($user_role === 'Administrador' || $user_role === 'Bibliotecario' || $user_ro
 
 } else {
     // Normal users can only see their own loans
-    $active_query = "SELECT l.id_loan, b.title, l.start_date, l.return_deadline, l.status 
+    $active_query = "SELECT l.id_loan, b.title, c.id_copy, l.start_date, l.return_deadline, l.status 
         FROM loans l
         INNER JOIN copies c ON l.id_copy = c.id_copy
         INNER JOIN books b ON c.id_book = b.id_book
@@ -53,7 +53,7 @@ if ($user_role === 'Administrador' || $user_role === 'Bibliotecario' || $user_ro
         INNER JOIN returns r ON l.id_loan = r.id_loan
         WHERE l.status IN ('Finalizado', 'Cancelado') AND l.id_user = $id_current_user";
 
-    $fines_query = "SELECT f.id_fine, b.title, f.fine_date, f.amount, f.status, f.payment_date
+    $fines_query = "SELECT f.id_fine, b.title, c.id_copy, f.fine_date, f.amount, f.status, f.payment_date
         FROM fines f
         INNER JOIN loans l ON f.id_loan = l.id_loan
         INNER JOIN copies c ON l.id_copy = c.id_copy
@@ -160,6 +160,7 @@ $fines_result = mysqli_query($conn, $fines_query);
                     <?php } ?>
                     <th>ID</th>
                     <th>Libro</th>
+                    <th>No. Ejemplar</th>
                     <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
                     <th>Usuario</th>
                     <?php } ?>
@@ -177,6 +178,7 @@ $fines_result = mysqli_query($conn, $fines_query);
                     <?php } ?>
                     <td><?php echo $fila['id_fine']; ?></td>
                     <td><?php echo $fila['title']; ?></td>
+                    <td><?php echo $fila['id_copy']; ?></td>
                     <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
                     <td><?php echo $fila['usuario']; ?></td>
                     <?php } ?>
@@ -205,6 +207,7 @@ $fines_result = mysqli_query($conn, $fines_query);
                     <?php } ?>
                     <th>ID</th>
                     <th>Libro</th>
+                    <th>No. Ejemplar</th>
                     <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
                     <th>Usuario</th>
                     <?php } ?>
@@ -221,6 +224,7 @@ $fines_result = mysqli_query($conn, $fines_query);
                     <?php } ?>
                     <td><?php echo $fila['id_loan']; ?></td>
                     <td><?php echo $fila['title']; ?></td>
+                    <td><?php echo $fila['id_copy']; ?></td>
                     <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
                     <td><?php echo $fila['usuario']; ?></td>
                     <?php } ?>
@@ -248,6 +252,7 @@ $fines_result = mysqli_query($conn, $fines_query);
                     <?php } ?>
                     <th>ID</th>
                     <th>Libro</th>
+                    <th>No. Ejemplar</th>
                     <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
                     <th>Usuario</th>
                     <?php } ?>
@@ -264,6 +269,7 @@ $fines_result = mysqli_query($conn, $fines_query);
                     <?php } ?>
                     <td><?php echo $fila['id_loan']; ?></td>
                     <td><?php echo $fila['title']; ?></td>
+                    <td><?php echo $fila['id_copy']; ?></td>
                     <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
                     <td><?php echo $fila['usuario']; ?></td>
                     <?php } ?>
