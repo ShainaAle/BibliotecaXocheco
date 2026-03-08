@@ -51,7 +51,7 @@ DELIMITER $$
 
 -- ---------------------------------------------
 -- Trigger 1: trg_before_loan_insert
---It runs BEFORE registering a loan.
+-- It runs BEFORE registering a loan.
 -- Responsibilities:
 -- 1. Verifies that the copy status is 'Disponible'.
 --      If it is not, it throws an error and cancels

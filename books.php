@@ -58,6 +58,8 @@ $result = $conn->query($sql);
                     <li class="nav-item">
                         <a class="nav-link" href="UsersView.html">Usuarios</a>
                     </li>
+                    <?php } ?>
+                    <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="autorsAndEditorials.html">Autores y Editoriales</a>
                     </li>
