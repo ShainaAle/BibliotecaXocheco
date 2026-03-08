@@ -52,7 +52,7 @@ $result = $conn->query($sql);
                         <a class="nav-link" href="books.php">Libros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="prestamosView.html">Préstamos</a>
+                        <a class="nav-link" href="prestamosView.php">Préstamos</a>
                     </li>
                     <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin') { ?>
                     <li class="nav-item">
@@ -129,7 +129,7 @@ $result = $conn->query($sql);
                                 if (isset($_SESSION['rol'])) {
                                     if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') {
                                         // Ajusta el nombre de tu archivo de préstamos aquí
-                                        $rutaSolicitud = "prestamosView.html?id_book=" . $libro['id_book'];
+                                        $rutaSolicitud = "prestamosView.php?id_book=" . $libro['id_book'];
                                     } else {
                                         // Ajusta el nombre de tu archivo de reservaciones aquí
                                         $rutaSolicitud = "reservacion.php?id_book=" . $libro['id_book'];
@@ -180,7 +180,7 @@ $result = $conn->query($sql);
                     <ul class="list-unstyled">
                         <li><a href="index.php" class="text-light text-decoration-none">Inicio</a></li>
                         <li><a href="books.php" class="text-light text-decoration-none">Libros</a></li>
-                        <li><a href="singnin.php" class="text-light text-decoration-none">Préstamos</a></li>
+                        <li><a href="prestamosView.php" class="text-light text-decoration-none">Préstamos</a></li>
                     </ul>
                 </div>
                 <!-- Columna derecha -->

@@ -109,7 +109,7 @@ $fines_result = mysqli_query($conn, $fines_query);
                         <a class="nav-link" href="books.php">Libros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="prestamosView.html">Préstamos</a>
+                        <a class="nav-link" href="prestamosView.php">Préstamos</a>
                     </li>
                     <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin') { ?>
                     <li class="nav-item">
@@ -291,7 +291,7 @@ $fines_result = mysqli_query($conn, $fines_query);
                     <ul class="list-unstyled">
                         <li><a href="index.php" class="text-light text-decoration-none">Inicio</a></li>
                         <li><a href="books.php" class="text-light text-decoration-none">Libros</a></li>
-                        <li><a href="signin.php" class="text-light text-decoration-none">Préstamos</a></li>
+                        <li><a href="prestamosView.php" class="text-light text-decoration-none">Préstamos</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 mb-3">
