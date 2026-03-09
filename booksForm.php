@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id_publisher = (int)$_POST['publisher'];
     $id_genre = (int)$_POST['genre']; // Corregido a id_genre
 
-    // Atrapamos el array de autores
+    // Authors are received as an array, so we can handle them with a loop
     $autores_seleccionados = isset($_POST['author']) ? $_POST['author'] : [];
 
     // Verify that ISBN and Authors are not empty
