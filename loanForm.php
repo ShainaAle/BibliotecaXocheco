@@ -18,16 +18,16 @@ include('src/conexion/conexion.php');
 $alert_message = "";
 
 //Insert processing
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id_copy = $_POST['copy'];
     $id_user = $_POST['user'];
     // Verify if reservation ID is provided, if not, set it to null
-    $id_booking = !empty($_POST['reservation']) ? $_POST['reservation'] : null;
+    $id_booking = !empty($_POST['reservation']) && trim($_POST['reservation']) !== '' ? (int)$_POST['reservation'] : 'NULL';
     $start_date = date('Y-m-d');
 
     // The return date is calculated by the 'trg_before_loan_insert' trigger in the database
     $insert_query = "INSERT INTO loans (id_user, id_booking, id_copy, start_date, return_deadline, status)
-        VALUES ($id_user, $id_booking, $id_copy, '$start_date', '$start_date, 'Activo')";
+        VALUES ($id_user, $id_booking, $id_copy, '$start_date' , '$start_date', 'Activo')";
     
     if (mysqli_query($conn, $insert_query)) {
         $alert_message = "<div class='alert alert-success mt-3'>¡Préstamo registrado exitosamente! La base de datos calculó la fecha de devolución automáticamente.</div>";
@@ -152,9 +152,14 @@ $result_users = mysqli_query($conn, $query_users) or die("Error SQL in Users: " 
                     <label for="user">Usuario que solicita el préstamo</label>
                 </div>
 
-                 
+                <div class="col-md-12 form-floating">
+                    <input type="number" class="form-control" id="reservation" name="reservation" placeholder="Ej. 15">
+                    <label for="reservation">ID de Reserva (opcional)</label>
+                </div>
             </div>
-            <button class="btn btn-primary w-100 py-2" type="submit">Crear</button>
+
+            <button class="btn btn-success w-100 py-2" type="submit">Crear Préstamo</button>
+            <a href="loansView.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver a Préstamos</a>
         </form>
     </main>
 

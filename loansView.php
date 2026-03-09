@@ -141,7 +141,7 @@ $fines_result = mysqli_query($conn, $fines_query);
         <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
         <div class="row">
             <div class="col-md-2 p-2 md-2">
-                <a href="prestamoForm.html" class="btn btn-sm btn-success" id="btnAgregar">Nuevo Préstamo</a>
+                <a href="loanForm.php" class="btn btn-sm btn-success" id="btnAgregar">Nuevo Préstamo</a>
             </div>
             <div class="col-md-3 p-2 md-2">
                 <button class="btn btn-sm btn-warning">Modificar Préstamo</button>
