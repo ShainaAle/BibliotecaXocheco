@@ -1,3 +1,24 @@
+<?php
+session_start();
+// Verify if the user is logged, if not, redirect to the login page.
+if (!isset($_SESSION['id_user'])) {
+    header("Location: signin.php");
+    exit(); 
+}
+
+include("src/conexion/conexion.php");
+
+$id_current_user = $_SESSION['id_user'];
+$user_role = $_SESSION['rol'] ?? 'normal_user'; // Default to 'normal_user' if 'rol' is not set
+
+// Queries to fill the tables with data from the database
+$authors_query = "SELECT id_author, full_name FROM authors";
+$publishers_query = "SELECT id_publisher, name FROM publishers";
+
+$authors_result = mysqli_query($conn, $authors_query);
+$publishers_result = mysqli_query($conn, $publishers_query);
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -16,8 +37,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    <link href="src/styles/sign-in.css" rel="stylesheet">
-    <title>Nueva Editorial</title>
+
+    <script>
+        function toggleCheckboxes(source, className) {
+            checkboxes = document.getElementsByClassName(className);
+            for(var i=0, n=checkboxes.length;i<n;i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+    </script>
+
+    <title>Autores y Editoriales</title>
 </head>
 
 <body>
@@ -41,7 +71,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="prestamosView.php">Préstamos</a>
                     </li>
-                    <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') { ?>
+                    <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin') { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="UsersView.html">Usuarios</a>
                     </li>
@@ -57,25 +87,69 @@
             </div>
         </div>
     </nav>
-
-    <main class="form-signin w-100 m-auto">
-        <form action="editorialForm.html" method="PUT">
-            <div style="text-align: center;">
-                <a href="index.php">
-                    <img class="mb-4" src="src\Images\Logo.png" alt="" width="72" height="57">
-                </a>
-                <h1 class="h3 mb-3 fw-normal">Nueva editorial</h1>
+    <div class="container-fluid">
+        <?php if ($_SESSION['rol'] === 'admin') { ?>
+        <div class="row">
+            <div class="col-md-2 p-2 md-2">
+                <a href="author-form.php" class="btn btn-sm btn-success">Agregar autor</a>
             </div>
-
-            <div class="cointainer-fluid bg-light">
-                <div class="col-md-12 form-floating">
-                    <input type="name" class="form-control" id="floatingInput" name="editorial_name">
-                    <label for="floatingInput">Nombre</label>
-                </div>
-                <button class="btn btn-primary w-100 py-2 my-4" type="submit">Agregar</button>
+            <div class="col-md-2 p-2 md-2">
+                <a href="publisher-form.php" class="btn btn-sm btn-success">Agregar editorial</a>
             </div>
-        </form>
-    </main>
+        </div>
+        <div class="row">
+            <div class="col-md-2 p-2 md-4">
+                <a href="eliminarAutor.html" class="btn btn-sm btn-danger">Eliminar autor</a>
+            </div>
+            <div class="col-md-2 p-2 md-4">
+                <a href="eliminarEditorial.html" class="btn btn-sm btn-danger">Eliminar editorial</a>
+            </div>
+        </div>
+        <?php } ?>
+    </div>
+    <h1 class="mb-4">Autores</h1>
+    <div class="table-responsive mb-5">
+        <table class="table table-striped table-bordered align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th><input type="checkbox" id="selectAll"></th>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php while ($author = mysqli_fetch_assoc($authors_result)) { ?>
+                <tr>
+                    <td><input type="checkbox" class="authorCheckbox" value="<?php echo $author['id_author']; ?>"></td>
+                    <td><?php echo $author['id_author']; ?></td>
+                    <td><?php echo $author['full_name']; ?></td>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+    </div>
+
+    <h1 class="mb-4">Editoriales</h1>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th><input type="checkbox" id="selectAll"></th>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php while ($publisher = mysqli_fetch_assoc($publishers_result)) { ?>
+                <tr>
+                    <td><input type="checkbox" class="publisherCheckbox" value="<?php echo $publisher['id_publisher']; ?>"></td>
+                    <td><?php echo $publisher['id_publisher']; ?></td>
+                    <td><?php echo $publisher['name']; ?></td>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+    </div>
 
     <footer class="bg-dark text-light py-4 mt-5">
         <div class="container text-center">
@@ -91,7 +165,7 @@
                     <ul class="list-unstyled">
                         <li><a href="index.php" class="text-light text-decoration-none">Inicio</a></li>
                         <li><a href="books.php" class="text-light text-decoration-none">Libros</a></li>
-                        <li><a href="prestamosView.php" class="text-light text-decoration-none">Préstamos</a></li>
+                        <li><a href="loans.php" class="text-light text-decoration-none">Préstamos</a></li>
                     </ul>
                 </div>
                 <!-- Columna derecha -->

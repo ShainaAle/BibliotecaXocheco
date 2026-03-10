@@ -109,14 +109,14 @@ $result_genres = mysqli_query($conn, "SELECT id_genre, name FROM genres ORDER BY
                         <a class="nav-link" href="books.php">Libros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="prestamosView.php">Préstamos</a>
+                        <a class="nav-link" href="loans.php">Préstamos</a>
                     </li>
                     <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'Administrador' || $_SESSION['rol'] === 'bibliotecario' || $_SESSION['rol'] === 'Bibliotecario')) { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="UsersView.html">Usuarios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="autorsAndEditorials.html">Autores y Editoriales</a>
+                        <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>
                     </li>
                     <?php } ?>
                 </ul>

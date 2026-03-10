@@ -51,14 +51,14 @@ $result = $conn->query($sql);
             <a class="nav-link" href="books.php">Libros</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="prestamosView.php">Préstamos</a>
+            <a class="nav-link" href="loans.php">Préstamos</a>
           </li>
           <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin') { ?>
             <li class="nav-item">
                 <a class="nav-link" href="UsersView.html">Usuarios</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="autorsAndEditorials.html">Autores y Editoriales</a>
+                <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>
             </li>
           <?php } ?>
         </ul>
@@ -187,7 +187,7 @@ $result = $conn->query($sql);
           <ul class="list-unstyled">
             <li><a href="index.php" class="text-light text-decoration-none">Inicio</a></li>
             <li><a href="books.php" class="text-light text-decoration-none">Libros</a></li>
-            <li><a href="prestamosView.php" class="text-light text-decoration-none">Préstamos</a></li>
+            <li><a href="loans.php" class="text-light text-decoration-none">Préstamos</a></li>
           </ul>
         </div>
         <!-- Columna derecha -->

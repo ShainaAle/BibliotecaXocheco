@@ -16,9 +16,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-
-
-    <title>Autores y Editoriales</title>
+    <link href="src/styles/sign-in.css" rel="stylesheet">
+    <title>Nueva Editorial</title>
 </head>
 
 <body>
@@ -40,14 +39,14 @@
                         <a class="nav-link" href="books.php">Libros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="prestamosView.php">Préstamos</a>
+                        <a class="nav-link" href="loans.php">Préstamos</a>
                     </li>
-                    <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin') { ?>
+                    <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="UsersView.html">Usuarios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="autorsAndEditorials.html">Autores y Editoriales</a>
+                        <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>
                     </li>
                     <?php } ?>
                 </ul>
@@ -58,65 +57,25 @@
             </div>
         </div>
     </nav>
-    <div class="container-fluid">
-        <?php if ($_SESSION['rol'] === 'admin') { ?>
-        <div class="row">
-            <div class="col-md-2 p-2 md-2">
-                <a href="autorForm.html" class="btn btn-sm btn-success">Agregar autor</a>
-            </div>
-            <div class="col-md-2 p-2 md-2">
-                <a href="editorialForm.html" class="btn btn-sm btn-success">Agregar editorial</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2 p-2 md-4">
-                <a href="eliminarAutor.html" class="btn btn-sm btn-danger">Eliminar autor</a>
-            </div>
-            <div class="col-md-2 p-2 md-4">
-                <a href="eliminarEditorial.html" class="btn btn-sm btn-danger">Eliminar editorial</a>
-            </div>
-        </div>
-        <?php } ?>
-    </div>
-    <h1 class="mb-4">Autores</h1>
-    <div class="table-responsive mb-5">
-        <table class="table table-striped table-bordered align-middle">
-            <thead class="table-dark">
-                <tr>
-                    <th><input type="checkbox" id="selectAll"></th> <!-- Seleccionar todos -->
-                    <th>ID</th>
-                    <th>Nombre</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="checkbox" class="userCheckbox" value="001"></td>
-                    <td>001</td>
-                    <td>Juan Pérez</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 
-    <h1 class="mb-4">Editoriales</h1>
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered align-middle">
-            <thead class="table-dark">
-                <tr>
-                    <th><input type="checkbox" id="selectAll"></th> <!-- Seleccionar todos -->
-                    <th>ID</th>
-                    <th>Nombre</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="checkbox" class="userCheckbox" value="001"></td>
-                    <td>001</td>
-                    <td>Planeta</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <main class="form-signin w-100 m-auto">
+        <form action="editorialForm.html" method="PUT">
+            <div style="text-align: center;">
+                <a href="index.php">
+                    <img class="mb-4" src="src\Images\Logo.png" alt="" width="72" height="57">
+                </a>
+                <h1 class="h3 mb-3 fw-normal">Nueva editorial</h1>
+            </div>
+
+            <div class="cointainer-fluid bg-light">
+                <div class="col-md-12 form-floating">
+                    <input type="name" class="form-control" id="floatingInput" name="editorial_name">
+                    <label for="floatingInput">Nombre</label>
+                </div>
+                <button class="btn btn-primary w-100 py-2 my-4" type="submit">Agregar</button>
+            </div>
+        </form>
+    </main>
 
     <footer class="bg-dark text-light py-4 mt-5">
         <div class="container text-center">
@@ -132,7 +91,7 @@
                     <ul class="list-unstyled">
                         <li><a href="index.php" class="text-light text-decoration-none">Inicio</a></li>
                         <li><a href="books.php" class="text-light text-decoration-none">Libros</a></li>
-                        <li><a href="prestamosView.php" class="text-light text-decoration-none">Préstamos</a></li>
+                        <li><a href="loans.php" class="text-light text-decoration-none">Préstamos</a></li>
                     </ul>
                 </div>
                 <!-- Columna derecha -->

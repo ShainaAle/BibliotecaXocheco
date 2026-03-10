@@ -109,7 +109,7 @@ $fines_result = mysqli_query($conn, $fines_query);
                         <a class="nav-link" href="books.php">Libros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="prestamosView.php">Préstamos</a>
+                        <a class="nav-link" href="loans.php">Préstamos</a>
                     </li>
                     <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin') { ?>
                     <li class="nav-item">
@@ -118,7 +118,7 @@ $fines_result = mysqli_query($conn, $fines_query);
                     <?php } ?>
                     <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="autorsAndEditorials.html">Autores y Editoriales</a>
+                        <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>
                     </li>
                     <?php } ?>
                 </ul>
@@ -141,7 +141,7 @@ $fines_result = mysqli_query($conn, $fines_query);
         <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
         <div class="row">
             <div class="col-md-2 p-2 md-2">
-                <a href="loanForm.php" class="btn btn-sm btn-success" id="btnAgregar">Nuevo Préstamo</a>
+                <a href="loan-form.php" class="btn btn-sm btn-success" id="btnAgregar">Nuevo Préstamo</a>
             </div>
             <div class="col-md-3 p-2 md-2">
                 <button class="btn btn-sm btn-warning">Modificar Préstamo</button>
@@ -297,7 +297,7 @@ $fines_result = mysqli_query($conn, $fines_query);
                     <ul class="list-unstyled">
                         <li><a href="index.php" class="text-light text-decoration-none">Inicio</a></li>
                         <li><a href="books.php" class="text-light text-decoration-none">Libros</a></li>
-                        <li><a href="prestamosView.php" class="text-light text-decoration-none">Préstamos</a></li>
+                        <li><a href="loans.php" class="text-light text-decoration-none">Préstamos</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 mb-3">
