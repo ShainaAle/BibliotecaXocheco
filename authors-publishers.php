@@ -87,69 +87,67 @@ $publishers_result = mysqli_query($conn, $publishers_query);
             </div>
         </div>
     </nav>
-    <div class="container-fluid">
-        <?php if ($_SESSION['rol'] === 'admin') { ?>
-        <div class="row">
-            <div class="col-md-2 p-2 md-2">
-                <a href="author-form.php" class="btn btn-sm btn-success">Agregar autor</a>
-            </div>
-            <div class="col-md-2 p-2 md-2">
-                <a href="publisher-form.php" class="btn btn-sm btn-success">Agregar editorial</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2 p-2 md-4">
-                <a href="eliminarAutor.html" class="btn btn-sm btn-danger">Eliminar autor</a>
-            </div>
-            <div class="col-md-2 p-2 md-4">
-                <a href="eliminarEditorial.html" class="btn btn-sm btn-danger">Eliminar editorial</a>
-            </div>
+    <h1 class="mb-4">Autores</h1>
+    <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'Administrador' || $_SESSION['rol'] === 'Bibliotecario') { ?>
+    <form action="backend\authors-process.php" method="POST">
+        <div class="mb-3">
+            <a href="author-form.php" class="btn btn-sm btn-success me-2">Nuevo Autor</a>
+            <button type="submit" name="action" value="modify" class="btn btn-sm btn-warning me-2">Modificar Seleccionados</button>
+            <button type="submit" name="action" value="delete" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar los autores seleccionados?');">Eliminar Seleccionados</button>
         </div>
         <?php } ?>
-    </div>
-    <h1 class="mb-4">Autores</h1>
-    <div class="table-responsive mb-5">
-        <table class="table table-striped table-bordered align-middle">
-            <thead class="table-dark">
-                <tr>
-                    <th><input type="checkbox" id="selectAll"></th>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php while ($author = mysqli_fetch_assoc($authors_result)) { ?>
-                <tr>
-                    <td><input type="checkbox" class="authorCheckbox" value="<?php echo $author['id_author']; ?>"></td>
-                    <td><?php echo $author['id_author']; ?></td>
-                    <td><?php echo $author['full_name']; ?></td>
-                </tr>
-            <?php } ?>
-            </tbody>
-        </table>
-    </div>
+        <div class="table-responsive mb-5">
+            <table class="table table-striped table-bordered align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 50px;"><input type="checkbox" onClick="toggleCheckboxes(this, 'authorCheckbox')"></th>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php while ($author = mysqli_fetch_assoc($authors_result)) { ?>
+                    <tr>
+                        <td><input type="checkbox" class="authorCheckbox" name="ids[]" value="<?php echo $author['id_author']; ?>"></td>
+                        <td><?php echo $author['id_author']; ?></td>
+                        <td><?php echo $author['full_name']; ?></td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </form>
 
     <h1 class="mb-4">Editoriales</h1>
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered align-middle">
-            <thead class="table-dark">
-                <tr>
-                    <th><input type="checkbox" id="selectAll"></th>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php while ($publisher = mysqli_fetch_assoc($publishers_result)) { ?>
-                <tr>
-                    <td><input type="checkbox" class="publisherCheckbox" value="<?php echo $publisher['id_publisher']; ?>"></td>
-                    <td><?php echo $publisher['id_publisher']; ?></td>
-                    <td><?php echo $publisher['name']; ?></td>
-                </tr>
-            <?php } ?>
-            </tbody>
-        </table>
-    </div>
+    <form action="procesarEditoriales.php" method="POST">
+        <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'Administrador' || $_SESSION['rol'] === 'Bibliotecario') { ?>
+        <div class="mb-3">
+            <a href="publisher-form.php" class="btn btn-sm btn-success me-2">Nueva Editorial</a>
+            <button type="submit" name="action" value="modify" class="btn btn-sm btn-warning me-2">Modificar Seleccionadas</button>
+            <button type="submit" name="action" value="delete" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar las editoriales seleccionadas?');">Eliminar Seleccionadas</button>
+        </div>
+        <?php } ?>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 50px;"><input type="checkbox" onClick="toggleCheckboxes(this, 'publisherCheckbox')"></th>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php while ($publisher = mysqli_fetch_assoc($publishers_result)) { ?>
+                    <tr>
+                        <td><input type="checkbox" class="publisherCheckbox" name="ids[]" value="<?php echo $publisher['id_publisher']; ?>"></td>
+                        <td><?php echo $publisher['id_publisher']; ?></td>
+                        <td><?php echo $publisher['name']; ?></td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </form>
 
     <footer class="bg-dark text-light py-4 mt-5">
         <div class="container text-center">

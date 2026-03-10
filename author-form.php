@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
             <button class="btn btn-success w-100 py-2 mt-4" type="submit">Guardar Autor</button>
-            <a href="authors-editorials.html" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver al catálogo</a>
+            <a href="authors-publishers.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver al catálogo</a>
         </form>
     </main>
 
