@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // If the array is empty, it means the user didn't select any checkbox, we will show an alert and return to the previous page
     if (empty($ids_selected)) {
         echo "<script>
-                alert('No seleccionaste ningún autor.'); 
+                alert('No seleccionaste ninguna editorial.'); 
                 window.location.href='../authors-publishers.php';
               </script>";
         exit();
@@ -41,17 +41,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action === 'delete') {
         if ($rol === 'admin' || $rol === 'Administrador') {
-            $query_delete = "DELETE FROM authors WHERE id_author IN ($ids_string)";
+            $query_delete = "DELETE FROM publishers WHERE id_publisher IN ($ids_string)";
 
             if (mysqli_query($conn, $query_delete)) {
                 echo "<script>
-                        alert('Autores eliminados correctamente de la base de datos.'); 
+                        alert('Editoriales eliminadas correctamente de la base de datos.'); 
                         window.location.href='../authors-publishers.php';
                       </script>";
             } else {
                 if (mysqli_errno($conn) == 1451) {
                      echo "<script>
-                            alert('Error: No puedes eliminar uno o más de estos autores porque ya tienen libros asignados en el catálogo. Elimina los libros primero.'); 
+                            alert('Error: No puedes eliminar uno o más de estas editoriales porque ya tienen libros asignados en el catálogo. Elimina los libros primero.'); 
                             window.location.href='../authors-publishers.php';
                           </script>";
                 } else {
@@ -63,12 +63,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } else {
             echo "<script>
-                    alert('No tienes permisos para eliminar autores.'); 
+                    alert('No tienes permisos para eliminar editoriales.'); 
                     window.location.href='../authors-publishers.php';
                   </script>";
         }
     } elseif ($action === 'modify') { 
-        header("Location: ../modify-forms/edit-authors.php?ids=" . $ids_string);
+        header("Location: ../modify-forms/edit-publishers.php?ids=" . $ids_string);
         exit();
     }
 

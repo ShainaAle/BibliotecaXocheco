@@ -119,7 +119,7 @@ $publishers_result = mysqli_query($conn, $publishers_query);
     </form>
 
     <h1 class="mb-4">Editoriales</h1>
-    <form action="procesarEditoriales.php" method="POST">
+    <form action="backend/publishers-process.php" method="POST">
         <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'Administrador' || $_SESSION['rol'] === 'Bibliotecario') { ?>
         <div class="mb-3">
             <a href="publisher-form.php" class="btn btn-sm btn-success me-2">Nueva Editorial</a>
