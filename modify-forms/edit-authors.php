@@ -119,6 +119,9 @@ if (mysqli_num_rows($result_authors) == 0) {
                     <li class="nav-item">
                         <a class="nav-link" href="../authors-publishers.php">Autores y Editoriales</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../inventary.php">Inventario</a>
+                    </li>
                 </ul>
                 <div>
                     <div class="d-flex">

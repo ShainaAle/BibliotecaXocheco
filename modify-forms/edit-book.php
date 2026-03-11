@@ -125,7 +125,7 @@ $result_genres = mysqli_query($conn, "SELECT id_genre, name FROM genres ORDER BY
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="../index.php">Inicio</a>
+                        <a class="nav-link active" aria-current="page" href="index.php">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../books.php">Libros</a>
@@ -138,6 +138,9 @@ $result_genres = mysqli_query($conn, "SELECT id_genre, name FROM genres ORDER BY
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../authors-publishers.php">Autores y Editoriales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../inventary.php">Inventario</a>
                     </li>
                 </ul>
                 <div>
@@ -238,5 +241,33 @@ $result_genres = mysqli_query($conn, "SELECT id_genre, name FROM genres ORDER BY
             <a href="../books.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar</a>
         </form>
     </main>
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container text-center">
+            <div class="row">
+                <!-- Columna izquierda -->
+                <div class="col-md-4 mb-3">
+                    <h5>Xocheco Biblioteca</h5>
+                    <p class="small">Conocimiento y comunidad al alcance de todos.</p>
+                </div>
+                <!-- Columna central -->
+                <div class="col-md-4 mb-3">
+                    <h6>Enlaces útiles</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="../index.php" class="text-light text-decoration-none">Inicio</a></li>
+                        <li><a href="../books.php" class="text-light text-decoration-none">Libros</a></li>
+                        <li><a href="../loans.php" class="text-light text-decoration-none">Préstamos</a></li>
+                    </ul>
+                </div>
+                <!-- Columna derecha -->
+                <div class="col-md-4 mb-3">
+                    <h6>Contacto</h6>
+                    <p class="small mb-1">Correo: contacto@xocheco.com</p>
+                    <p class="small">Tel: +52 442 123 4567</p>
+                </div>
+            </div>
+            <hr class="border-light">
+            <p class="small mb-0">&copy; 2026 Xocheco Biblioteca. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 </body>
 </html>
