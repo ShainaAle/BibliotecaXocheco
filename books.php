@@ -63,6 +63,9 @@ $result = $conn->query($sql);
                     <li class="nav-item">
                         <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="inventary.php">Inventario</a>
+                    </li>
                     <?php } ?>
                 </ul>
                 <div>

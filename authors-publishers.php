@@ -77,6 +77,9 @@ $publishers_result = mysqli_query($conn, $publishers_query);
                     <li class="nav-item">
                         <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="inventary.php">Inventario</a>
+                    </li>
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

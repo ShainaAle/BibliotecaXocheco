@@ -86,14 +86,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <li class="nav-item">
                         <a class="nav-link" href="loans.php">Préstamos</a>
                     </li>
-                    <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="UsersView.html">Usuarios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>
                     </li>
-                    <?php } ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="inventary.php">Inventario</a>
+                    </li>
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

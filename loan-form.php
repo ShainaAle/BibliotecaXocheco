@@ -105,6 +105,9 @@ $result_users = mysqli_query($conn, $query_users) or die("Error SQL in Users: " 
                     <li class="nav-item">
                         <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="inventary.php">Inventario</a>
+                    </li>
                     <?php } ?>
                 </ul>
                 <form class="d-flex">

@@ -118,6 +118,9 @@ $result_genres = mysqli_query($conn, "SELECT id_genre, name FROM genres ORDER BY
                     <li class="nav-item">
                         <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="inventary.php">Inventario</a>
+                    </li>
                     <?php } ?>
                 </ul>
             </div>
