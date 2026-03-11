@@ -69,7 +69,7 @@ $publishers_result = mysqli_query($conn, $publishers_query);
                         <a class="nav-link" href="books.php">Libros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="prestamosView.php">Préstamos</a>
+                        <a class="nav-link" href="loans.php">Préstamos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="UsersView.html">Usuarios</a>
