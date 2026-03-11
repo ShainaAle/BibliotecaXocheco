@@ -95,11 +95,6 @@ $result = $conn->query($sql);
                 <a href="books-form.php" class="btn btn-sm btn-success">Agregar libro</a>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 p-2 md-4">
-                <button class="btn btn-sm btn-danger">Eliminar libro</button>
-            </div>
-        </div>
         <?php } ?>
     </div>
     <!-- Book cards -->
