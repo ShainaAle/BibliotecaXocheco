@@ -139,22 +139,12 @@ $result = $conn->query($sql);
                                 }
                             ?>
 
-                            <a href="<?php echo $rutaSolicitud; ?>" class="btn btn-primary w-100 mb-2">
+                            <a href="<?php echo $rutaSolicitud; ?>" class="btn btn-success w-100 mb-2">
                                 <?php echo $textoBoton; ?>
                             </a>
 
                             <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
-                            <div class="row">
-                                <div class="col-6 p-1">
-                                    <a href="editar_libro.php?id=<?php echo $libro['id']; ?>" class="btn btn-sm btn-warning w-100">Editar</a>
-                                </div>
-                                <div class="col-6 p-1">
-                                    <form action="eliminar_libro.php" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar este libro?');">
-                                        <input type="hidden" name="id" value="<?php echo $libro['id']; ?>">
-                                        <button type="submit" class="btn btn-sm btn-danger w-100">Eliminar</button>
-                                    </form>
-                                </div>
-                            </div>
+                            <a href="modify-forms\edit-book.php?id_book=<?php echo $libro['id_book']; ?>" class="btn btn-sm btn-warning w-100">Editar</a>
                             <?php } ?>
                         </div>
                     </div>

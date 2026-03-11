@@ -113,16 +113,12 @@ if (mysqli_num_rows($result_authors) == 0) {
                     <li class="nav-item">
                         <a class="nav-link" href="../loans.php">Préstamos</a>
                     </li>
-                    <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin') { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="../UsersView.html">Usuarios</a>
                     </li>
-                    <?php } ?>
-                    <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="../authors-publishers.php">Autores y Editoriales</a>
                     </li>
-                    <?php } ?>
                 </ul>
                 <div>
                     <div class="d-flex">
