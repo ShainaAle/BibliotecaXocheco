@@ -7,7 +7,7 @@ if (!isset($_SESSION['id_user'])) {
     exit();
 }
 $rol = $_SESSION['rol'] ?? '';
-if ($rol !== 'admin' && $rol !== 'Administrador') {
+if ($rol !== 'admin' && $rol !== 'Administrador' && $rol !== 'bibliotecario' && $rol !== 'Bibliotecario') {
     header("Location: ../authors-publishers.php");
     exit();
 }

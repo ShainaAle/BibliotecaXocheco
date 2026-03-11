@@ -8,15 +8,25 @@ if (!isset($_SESSION['id_user'])) {
 
 include("src/conexion/conexion.php");
 
-$id_current_user = $_SESSION['id_user'];
-$user_role = $_SESSION['rol'] ?? 'normal_user'; // Default to 'normal_user' if 'rol' is not set
+//Verify if user has permission to access this page, if not, redirect to index.php
+$rol = $_SESSION['rol'] ?? '';
+if ($rol !== 'admin' && $rol !== 'bibliotecario' && $rol !== 'Administrador' && $rol !== 'Bibliotecario') {
+    header("Location: index.php");
+    exit();
+}
 
 // Queries to fill the tables with data from the database
-$authors_query = "SELECT id_author, full_name FROM authors";
-$publishers_query = "SELECT id_publisher, name FROM publishers";
+$copy_query = "SELECT c.id_copy, b.title, 
+               GROUP_CONCAT(a.full_name SEPARATOR ', ') as full_name, 
+               c.year, c.edition, c.code, c.location, c.status, c.notes 
+        FROM copies c
+        LEFT JOIN books b ON c.id_book = b.id_book
+        LEFT JOIN book_authors ba ON b.id_book = ba.id_book
+        LEFT JOIN authors a ON ba.id_author = a.id_author
+        GROUP BY c.id_copy";
 
-$authors_result = mysqli_query($conn, $authors_query);
-$publishers_result = mysqli_query($conn, $publishers_query);
+$copy_result = mysqli_query($conn, $copy_query) or die("Error al ejecutar la consulta: " . mysqli_error($conn));
+
 ?>
 
 <!doctype html>
@@ -47,7 +57,7 @@ $publishers_result = mysqli_query($conn, $publishers_query);
         }
     </script>
 
-    <title>Autores y Editoriales</title>
+    <title>Ejemplares | Xocheco</title>
 </head>
 
 <body>
@@ -69,6 +79,9 @@ $publishers_result = mysqli_query($conn, $publishers_query);
                         <a class="nav-link" href="books.php">Libros</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="inventary.php">Inventario</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="prestamosView.php">Préstamos</a>
                     </li>
                     <li class="nav-item">
@@ -85,12 +98,12 @@ $publishers_result = mysqli_query($conn, $publishers_query);
             </div>
         </div>
     </nav>
-    <h1 class="mb-4">Autores</h1>
-    <form action="backend\authors-process.php" method="POST">
+    <h1 class="mb-4">Ejemplares</h1>
+    <form action="backend/copies-process.php" method="POST">
         <div class="mb-3">
-            <a href="author-form.php" class="btn btn-sm btn-success me-2">Nuevo Autor</a>
+            <a href="copy-form.php" class="btn btn-sm btn-success me-2">Nuevo ejemplar</a>
             <button type="submit" name="action" value="modify" class="btn btn-sm btn-warning me-2">Modificar Seleccionados</button>
-            <button type="submit" name="action" value="delete" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar los autores seleccionados?');">Eliminar Seleccionados</button>
+            <button type="submit" name="action" value="delete" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar los ejemplares seleccionados?');">Eliminar Seleccionados</button>
         </div>
         <div class="table-responsive mb-5">
             <table class="table table-striped table-bordered align-middle">
@@ -98,46 +111,29 @@ $publishers_result = mysqli_query($conn, $publishers_query);
                     <tr>
                         <th style="width: 50px;"><input type="checkbox" onClick="toggleCheckboxes(this, 'authorCheckbox')"></th>
                         <th>ID</th>
-                        <th>Nombre</th>
+                        <th>Titulo</th>
+                        <th>Autor</th>
+                        <th>Año</th>
+                        <th>Edición</th>
+                        <th>Código</th>
+                        <th>Ubicación</th>
+                        <th>Estado</th>
+                        <th>Notas</th>
                     </tr>
                 </thead>
                 <tbody>
-                <?php while ($author = mysqli_fetch_assoc($authors_result)) { ?>
+                <?php while ($copy = mysqli_fetch_assoc($copy_result)) { ?>
                     <tr>
-                        <td><input type="checkbox" class="authorCheckbox" name="ids[]" value="<?php echo $author['id_author']; ?>"></td>
-                        <td><?php echo $author['id_author']; ?></td>
-                        <td><?php echo $author['full_name']; ?></td>
-                    </tr>
-                <?php } ?>
-                </tbody>
-            </table>
-        </div>
-    </form>
-
-    <h1 class="mb-4">Editoriales</h1>
-    <form action="backend/publishers-process.php" method="POST">
-        <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'Administrador' || $_SESSION['rol'] === 'Bibliotecario') { ?>
-        <div class="mb-3">
-            <a href="publisher-form.php" class="btn btn-sm btn-success me-2">Nueva Editorial</a>
-            <button type="submit" name="action" value="modify" class="btn btn-sm btn-warning me-2">Modificar Seleccionadas</button>
-            <button type="submit" name="action" value="delete" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar las editoriales seleccionadas?');">Eliminar Seleccionadas</button>
-        </div>
-        <?php } ?>
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered align-middle">
-                <thead class="table-dark">
-                    <tr>
-                        <th style="width: 50px;"><input type="checkbox" onClick="toggleCheckboxes(this, 'publisherCheckbox')"></th>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php while ($publisher = mysqli_fetch_assoc($publishers_result)) { ?>
-                    <tr>
-                        <td><input type="checkbox" class="publisherCheckbox" name="ids[]" value="<?php echo $publisher['id_publisher']; ?>"></td>
-                        <td><?php echo $publisher['id_publisher']; ?></td>
-                        <td><?php echo $publisher['name']; ?></td>
+                        <td><input type="checkbox" class="authorCheckbox" name="ids[]" value="<?php echo $copy['id_copy']; ?>"></td>
+                        <td><?php echo $copy['id_copy']; ?></td>
+                        <td><?php echo $copy['title']; ?></td>
+                        <td><?php echo $copy['full_name']; ?></td>
+                        <td><?php echo $copy['year']; ?></td>
+                        <td><?php echo $copy['edition']; ?></td>
+                        <td><?php echo $copy['code']; ?></td>
+                        <td><?php echo $copy['location']; ?></td>
+                        <td><?php echo $copy['status']; ?></td>
+                        <td><?php echo $copy['notes']; ?></td>
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -174,5 +170,4 @@ $publishers_result = mysqli_query($conn, $publishers_query);
         </div>
     </footer>
 </body>
-
 </html>

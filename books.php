@@ -113,7 +113,7 @@ $result = $conn->query($sql);
                             <h5 class="card-title"><?php echo $libro['title']; ?></h5>
                             <h6 class="card-subtitle mb-3 text-muted" style="font-size: 0.9rem;">
                                 <?php 
-                                    // Si hay autor lo muestra, si no pone "Autor desconocido"
+                                    // If the book has an author, show it; otherwise, show "Autor desconocido"
                                     echo !empty($libro['nombre_autor']) ? $libro['nombre_autor'] : 'Autor desconocido'; 
                                 ?>
                             </h6>
@@ -122,17 +122,14 @@ $result = $conn->query($sql);
                             </p>
 
                             <?php 
-                                // --- PEGA AQUÍ EL BLOQUE DE LÓGICA DE ARRIBA ---
                                 $rutaSolicitud = "signin.php"; 
                                 $textoBoton = "Solicitar";
                             
                                 if (isset($_SESSION['rol'])) {
                                     if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') {
-                                        // Ajusta el nombre de tu archivo de préstamos aquí
                                         $rutaSolicitud = "loans.php?id_book=" . $libro['id_book'];
                                     } else {
-                                        // Ajusta el nombre de tu archivo de reservaciones aquí
-                                        $rutaSolicitud = "reservacion.php?id_book=" . $libro['id_book'];
+                                        $rutaSolicitud = "reservations.php?id_book=" . $libro['id_book'];
                                     }
                                 } else {
                                      $textoBoton = "Inicia sesión para solicitar";
