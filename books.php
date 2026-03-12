@@ -127,7 +127,7 @@ $result = $conn->query($sql);
                                     if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') {
                                         $rutaSolicitud = "loans.php?id_book=" . $libro['id_book'];
                                     } else {
-                                        $rutaSolicitud = "reservations.php?id_book=" . $libro['id_book'];
+                                        $rutaSolicitud = "bookings-form.php?id_book=" . $libro['id_book'];
                                     }
                                 } else {
                                      $textoBoton = "Inicia sesión para solicitar";
