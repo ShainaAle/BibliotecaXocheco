@@ -1,3 +1,30 @@
+<?php
+session_start();
+// Verify if the user is logged, if not, redirect to the login page.
+if (!isset($_SESSION['id_user'])) {
+    header("Location: signin.php");
+    exit(); 
+}
+
+include("src/conexion/conexion.php");
+
+//Verify if user has permission to access this page, if not, redirect to index.php
+$rol = $_SESSION['rol'] ?? '';
+if ($rol !== 'admin' && $rol !== 'bibliotecario' && $rol !== 'Administrador' && $rol !== 'Bibliotecario') {
+    header("Location: index.php");
+    exit();
+}
+
+// Queries to fill the tables with data from the database
+$users_query = "SELECT u.id_user, u.name, u.last_name, u.email, t.name as user_type, r.name as role, u.active
+        FROM users u
+        LEFT JOIN user_types t ON u.id_user_type = t.id_user_type
+        LEFT JOIN roles r ON u.id_role = r.id_role
+        ORDER BY u.id_user ASC";
+
+$users_result = mysqli_query($conn, $users_query) or die("Error al ejecutar la consulta: " . mysqli_error($conn));
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -17,8 +44,16 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
+    <script>
+        function toggleCheckboxes(source, className) {
+            checkboxes = document.getElementsByClassName(className);
+            for(var i=0, n=checkboxes.length;i<n;i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+    </script>
 
-    <title>Usuarios Xocheco</title>
+    <title>Usuarios | Xocheco</title>
 </head>
 
 <body>
@@ -40,16 +75,20 @@
                         <a class="nav-link" href="books.php">Libros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="loans.php">Préstamos</a>
+                        <a class="nav-link" href="inventary.php">Inventario</a>
                     </li>
-                    <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="prestamosView.php">Préstamos</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="UsersView.html">Usuarios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>
                     </li>
-                    <?php } ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="inventary.php">Inventario</a>
+                    </li>
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -58,51 +97,48 @@
             </div>
         </div>
     </nav>
-
-    <div class="container-fluid">
-        <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') { ?>
-        <div class="row">
-            <div class="col-md-12 p-2 md-2">
-                <a href="registerForm.html" class="btn btn-sm btn-success" id="btnAgregar">Agregar usuario</a>
-            </div>
+    <h1 class="mb-4">Ejemplares</h1>
+    <form action="backend/users-process.php" method="POST">
+        <div class="mb-3">
+            <a href="register-form.php" class="btn btn-sm btn-success me-2">Nuevo usuario</a>
+            <button type="submit" name="action" value="modify" class="btn btn-sm btn-warning me-2">Modificar Seleccionados</button>
         </div>
-        <?php } ?>
-        <?php if ($_SESSION['rol'] === 'admin') { ?>
-        <div class="row">
-            <div class="col-md-12 p-2 md-4">
-                <button class="btn btn-sm btn-danger">Modificar Usuario</button>
-            </div>
+        <div class="table-responsive mb-5">
+            <table class="table table-striped table-bordered align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 50px;"><input type="checkbox" onClick="toggleCheckboxes(this, 'authorCheckbox')"></th>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Tipo de Usuario</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php while ($user = mysqli_fetch_assoc($users_result)) { ?>
+                    <td><input type="checkbox" class="userCheckbox" name="ids[]" value="<?php echo $user['id_user']; ?>"></td>
+                        <td><?php echo $user['id_user']; ?></td>
+                        <td><?php echo htmlspecialchars($user['name']); ?></td>
+                        <td><?php echo htmlspecialchars($user['last_name']); ?></td>
+                        <td><?php echo htmlspecialchars($user['email']); ?></td>
+                        <td><?php echo htmlspecialchars($user['user_type']); ?></td>
+                        <td><?php echo htmlspecialchars($user['role']); ?></td>
+                        <td>
+                            <?php if ($user['active'] == 1) { ?>
+                                <span class="badge bg-success">Activo</span>
+                            <?php } else { ?>
+                                <span class="badge bg-danger">Inactivo</span>
+                            <?php } ?>
+                        </td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
         </div>
-        <?php } ?>
-    </div>
-
-    <h1 class="mb-4">Usuarios</h1>
-    <div class="table-responsive mb-5">
-        <table class="table table-striped table-bordered align-middle">
-            <thead class="table-dark">
-                <tr>
-                    <th><input type="checkbox" id="selectAll"></th> <!-- Seleccionar todos -->
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Estado</th>
-                    <th>Tipo de Usuario</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="checkbox" class="userCheckbox" value="001"></td>
-                    <td>001</td>
-                    <td>Juli</td>
-                    <td>juli@example.com</td>
-                    <td>Queretaro</td>
-                    <td>Estudiante</td>
-                </tr>
-                <!-- Aquí agregas más usuarios -->
-            </tbody>
-        </table>
-
-    </div>
+    </form>
 
     <footer class="bg-dark text-light py-4 mt-5">
         <div class="container text-center">
@@ -132,8 +168,5 @@
             <p class="small mb-0">&copy; 2026 Xocheco Biblioteca. Todos los derechos reservados.</p>
         </div>
     </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
