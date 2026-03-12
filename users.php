@@ -97,7 +97,7 @@ $users_result = mysqli_query($conn, $users_query) or die("Error al ejecutar la c
             </div>
         </div>
     </nav>
-    <h1 class="mb-4">Ejemplares</h1>
+    <h1 class="mb-4">Usuarios</h1>
     <form action="backend/users-process.php" method="POST">
         <div class="mb-3">
             <a href="register-form.php" class="btn btn-sm btn-success me-2">Nuevo usuario</a>
@@ -107,7 +107,7 @@ $users_result = mysqli_query($conn, $users_query) or die("Error al ejecutar la c
             <table class="table table-striped table-bordered align-middle">
                 <thead class="table-dark">
                     <tr>
-                        <th style="width: 50px;"><input type="checkbox" onClick="toggleCheckboxes(this, 'authorCheckbox')"></th>
+                        <th style="width: 50px;"><input type="checkbox" onClick="toggleCheckboxes(this, 'userCheckbox')"></th>
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
