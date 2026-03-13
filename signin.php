@@ -23,7 +23,9 @@ $result = $conn->query($sql);
   <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
   <meta name="generator" content="Hugo 0.118.2">
   <meta name="description" content="Página de inicio de sesión para Xocheco.">
-  <title>Xocheco Signin</title>
+  <title>Iniciar Sesión | Xocheco</title>
+  
+  <link rel="icon" type="image/png" href="src/Images/Icon-Simp.png">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -37,6 +39,9 @@ $result = $conn->query($sql);
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
+      <a href="index.php" class="logo">
+                <img src="src/Images/Icon-Simp.png" alt="Logo" style="height: 40px;">
+            </a>
       <a class="navbar-brand" href="index.php">Xocheco</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +60,7 @@ $result = $conn->query($sql);
           </li>
           <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin') { ?>
             <li class="nav-item">
-                <a class="nav-link" href="UsersView.html">Usuarios</a>
+                <a class="nav-link" href="users.php">Usuarios</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>
