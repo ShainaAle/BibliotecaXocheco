@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$has_errors) {
         echo "<script>
                 alert('¡Usuarios actualizados correctamente!'); 
-                window.location.href='../UsersView.php';
+                window.location.href='../users.php';
               </script>";
         exit();
     } else {
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $ids_get = $_GET['ids'] ?? '';
 
 if (empty($ids_get)) {
-    header("Location: ../UsersView.php");
+    header("Location: ../users.php");
     exit();
 }
 
@@ -73,7 +73,7 @@ $query_users = "SELECT id_user, name, last_name, email, id_role, id_user_type, a
 $result_users = mysqli_query($conn, $query_users);
 
 if (mysqli_num_rows($result_users) == 0) {
-    header("Location: ../UsersView.php");
+    header("Location: ../users.php");
     exit();
 }
 
@@ -163,8 +163,8 @@ while ($row = mysqli_fetch_assoc($result_types)) { $types_array[] = $row; }
             </div>
 
             <div class="d-flex justify-content-end mt-4">
-                <a href="../UsersView.php" class="btn btn-outline-secondary me-2">Cancelar</a>
-                <button type="submit" class="btn btn-warning px-4">Guardar Cambios</button>
+                <a href="../users.php" class="btn btn-danger me-2">Cancelar</a>
+                <button type="submit" class="btn btn-success px-4">Guardar Cambios</button>
             </div>
         </form>
     </main>

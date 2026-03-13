@@ -10,7 +10,7 @@ if (!isset($_SESSION['id_user'])) {
 $role = $_SESSION['rol'] ?? '';
 
 if ($role !== 'admin' && $role !== 'Administrador' && $role !== 'bibliotecario' && $role !== 'Bibliotecario') {
-    header("Location: ../UsersView.php");
+    header("Location: ../users.php");
     exit();
 }
 
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($selected_ids)) {
         echo "<script>
                 alert('No seleccionaste ningún usuario.'); 
-                window.location.href='../UsersView.php';
+                window.location.href='../users.php';
               </script>";
         exit();
     }
@@ -42,6 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     */
 } else {
-    header("Location: ../UsersView.php");
+    header("Location: ../users.php");
 }
 ?>
