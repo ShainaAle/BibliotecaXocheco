@@ -24,7 +24,7 @@ $result = $conn->query($sql);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <link href="src\styles\styleIndex.css" rel="stylesheet">
+    <link href="src/styles/styleIndex.css" rel="stylesheet">
 
     <link rel="icon" type="image/png" href="src/Images/Icon-Simp.png">
 
@@ -97,7 +97,7 @@ $result = $conn->query($sql);
         <div class="row mt-3">
         <div class="row">
             <div class="col-md-12 p-2 md-2">
-                <a href="books-form.php" class="btn btn-sm btn-success">Agregar libro</a>
+                <a href="insert-forms/books-form.php" class="btn btn-sm btn-success">Agregar libro</a>
             </div>
         </div>
         <?php } ?>
@@ -130,9 +130,9 @@ $result = $conn->query($sql);
                             
                                 if (isset($_SESSION['rol'])) {
                                     if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') {
-                                        $rutaSolicitud = "loans.php?id_book=" . $libro['id_book'];
+                                        $rutaSolicitud = "insert-forms/loan-form.php";
                                     } else {
-                                        $rutaSolicitud = "bookings-form.php?id_book=" . $libro['id_book'];
+                                        $rutaSolicitud = "insert-forms/bookings-form.php?id_book=" . $libro['id_book'];
                                     }
                                 } else {
                                      $textoBoton = "Inicia sesión para solicitar";

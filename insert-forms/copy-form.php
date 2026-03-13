@@ -3,18 +3,18 @@ session_start();
 
 // 1. Verify if the user is logged in
 if (!isset($_SESSION['id_user'])) {
-    header("Location: signin.php");
+    header("Location: ../signin.php");
     exit();
 }
 
 // 2. Verify privileges (Only Admins and Librarians can add copies)
 $role = $_SESSION['rol'] ?? '';
 if ($role !== 'admin' && $role !== 'Administrador' && $role !== 'bibliotecario' && $role !== 'Bibliotecario') {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 
-include('src/conexion/conexion.php');
+include('../src/conexion/conexion.php');
 
 $alert_message = "";
 
@@ -71,15 +71,13 @@ $result_books = mysqli_query($conn, $query_books) or die(mysqli_error($conn));
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <link rel="icon" type="image/png" href="src/Images/Icon-Simp.png">
-
     <link href="src\styles\styleIndex.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <link href="src/styles/sign-in.css" rel="stylesheet">
-    <title>Nuevo Ejemplar | Xocheco</title>
+    <title>Nuevo Ejemplar</title>
 </head>
 
 <body>
@@ -123,10 +121,10 @@ $result_books = mysqli_query($conn, $query_books) or die(mysqli_error($conn));
                                 Hola, <?php echo isset($_SESSION['nombre_completo']) ? explode(' ', $_SESSION['nombre_completo'])[0] : 'Usuario'; ?>
                             </span>
 
-                            <a href="logout.php" class="btn btn-outline-danger">Cerrar Sesión</a>
+                            <a href="../logout.php" class="btn btn-outline-danger">Cerrar Sesión</a>
 
                         <?php } else { ?>
-                            <a href="signin.php" class="btn btn-primary">Iniciar Sesión</a>
+                            <a href="../signin.php" class="btn btn-primary">Iniciar Sesión</a>
 
                         <?php } ?>
                     </div>
@@ -138,8 +136,8 @@ $result_books = mysqli_query($conn, $query_books) or die(mysqli_error($conn));
     <main class="form-signin w-100 m-auto">
         <form action="" method="POST" class="p-4 border rounded-3 bg-light shadow-sm">
             <div style="text-align: center;">
-                <a href="index.php">
-                    <img class="mb-4" src="src\Images\Logo.png" alt="" width="72" height="57">
+                <a href="../index.php">
+                    <img class="mb-4" src="../src/Images/Logo.png" alt="" width="72" height="57">
                 </a>
                 <h1 class="h3 mb-3 fw-normal">Agrega un nuevo ejemplar</h1>
                 <p class="text-muted">Registra una copia física para un libro existente.</p>
@@ -202,7 +200,7 @@ $result_books = mysqli_query($conn, $query_books) or die(mysqli_error($conn));
             </div>
             
             <button class="btn btn-success w-100 py-2 mt-4" type="submit">Guardar Ejemplar</button>
-            <a href="inventary.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver al Inventario</a>
+            <a href="../inventary.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver al Inventario</a>
         </form>
     </main>
 

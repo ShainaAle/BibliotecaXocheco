@@ -3,14 +3,14 @@ session_start();
 
 // Verify if the user is logged in
 if (!isset($_SESSION['id_user'])) {
-    header("Location: signin.php");
+    header("Location: ../signin.php");
     exit();
 }
 
 // Verify privileges
 $role = $_SESSION['rol'] ?? '';
 if ($role !== 'admin' && $role !== 'Administrador') {
-    header("Location: authors-publishers.php");
+    header("Location: ../authors-publishers.php");
     exit();
 }
 
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$has_errors) {
         echo "<script>
-                alert('Autores actualizados correctamente!'); 
+                alert('¡Autores actualizados correctamente!'); 
                 window.location.href='../authors-publishers.php';
               </script>";
         exit();
@@ -61,7 +61,7 @@ $ids_get = $_GET['ids'] ?? '';
 
 // If no IDs were passed, redirect back to the catalog
 if (empty($ids_get)) {
-    header("Location: authors-publishers.php");
+    header("Location: ../authors-publishers.php");
     exit();
 }
 
@@ -88,9 +88,10 @@ if (mysqli_num_rows($result_authors) == 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Library Management System">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="src\styles\styleIndex.css" rel="stylesheet">
+    <link href="../src/styles/styleIndex.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="../src/Images/Icon-Simp.png">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="../src/styles/sign-in.css" rel="stylesheet">
     <title>Editar Autores | Xocheco</title>
 </head>
 
@@ -100,7 +101,7 @@ if (mysqli_num_rows($result_authors) == 0) {
             <a href="index.php" class="logo">
                 <img src="../src/Images/Icon-Simp.png" alt="Logo" style="height: 40px;">
             </a>
-            <a class="navbar-brand" href="index.php">Xocheco</a>
+            <a class="navbar-brand" href="../index.php">Xocheco</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">

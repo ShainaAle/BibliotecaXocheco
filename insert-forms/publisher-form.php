@@ -2,57 +2,45 @@
 session_start();
 //Verify if user is logged in
 if (!isset($_SESSION['id_user'])) {
-    header("Location: signin.php");
+    header("Location: ../signin.php");
     exit();
 }
 
 //Verify if user has permission to access this page, if not, redirect to index.php
 $rol = $_SESSION['rol'] ?? '';
 if ($rol !== 'admin' && $rol !== 'bibliotecario' && $rol !== 'Administrador' && $rol !== 'Bibliotecario') {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 
-include('src/conexion/conexion.php');
+include('../src/conexion/conexion.php');
 
 $alert_message = "";
 
 //Insert processing
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id_copy = $_POST['copy'];
-    $id_user = $_POST['user'];
-    // Verify if reservation ID is provided, if not, set it to null
-    $id_booking = !empty($_POST['reservation']) && trim($_POST['reservation']) !== '' ? (int)$_POST['reservation'] : 'NULL';
-    $start_date = date('Y-m-d');
-
-    // The return date is calculated by the 'trg_before_loan_insert' trigger in the database
-    $insert_query = "INSERT INTO loans (id_user, id_booking, id_copy, start_date, return_deadline, status)
-        VALUES ($id_user, $id_booking, $id_copy, '$start_date' , '$start_date', 'Activo')";
-    
-    if (mysqli_query($conn, $insert_query)) {
-        $alert_message = "<div class='alert alert-success mt-3'>¡Préstamo registrado exitosamente! La base de datos calculó la fecha de devolución automáticamente.</div>";
+    // Verify that name is not empty
+    if (empty($publisher_name = mysqli_real_escape_string($conn, $_POST['publisher_name']))) {
+        $alert_message = "<div class='alert alert-danger mt-3'>El nombre de la editorial es obligatorio.</div>";
     } else {
-        $alert_message = "<div class='alert alert-danger mt-3'>Error al registrar el préstamo: " . mysqli_error($conn) . "</div>";
+        // Check if publisher with the same name already exists to prevent duplicates
+        $publisher_check_query = "SELECT id_publisher FROM publishers WHERE name = '$publisher_name'";
+        $publisher_check_result = mysqli_query($conn, $publisher_check_query);
+
+        if (mysqli_num_rows($publisher_check_result) > 0) {
+            $alert_message = "<div class='alert alert-danger mt-3'>La editorial ya existe en la base de datos. Por favor, ingresa una editorial única.</div>";
+        } else {
+            // Insert the new publisher into the database
+            $query_publishers = "INSERT INTO publishers (name) VALUES ('$publisher_name')";
+
+            if (mysqli_query($conn, $query_publishers)) {
+                $alert_message = "<div class='alert alert-success mt-3'>¡Editorial registrada exitosamente!</div>";
+            } else {
+                $alert_message = "<div class='alert alert-danger mt-3'>Error al guardar la editorial: " . mysqli_error($conn) . "</div>";
+            }
+        }
     }
 }
-
-// Querys to populate dropdowns
-// Get ONLY available copies
-$query_copies = "SELECT c.id_copy, b.title, c.edition, c.code
-    FROM copies c 
-    INNER JOIN books b ON c.id_book = b.id_book
-    WHERE c.status = 'Disponible'
-    ORDER BY b.title ASC";
-
-$result_copies = mysqli_query($conn, $query_copies) or die("Error SQL in Copies: " . mysqli_error($conn));
-
-// Get ONLY active users
-$query_users = "SELECT id_user, name, last_name, email
-    FROM users 
-    WHERE active = 1 AND (id_role = (SELECT id_role FROM roles WHERE name = 'Usuario'))
-    ORDER BY name ASC";
-
-$result_users = mysqli_query($conn, $query_users) or die("Error SQL in Users: " . mysqli_error($conn));
 ?>
 
 <!doctype html>
@@ -70,13 +58,13 @@ $result_users = mysqli_query($conn, $query_users) or die("Error SQL in Users: " 
 
     <link rel="icon" type="image/png" href="src/Images/Icon-Simp.png">
 
-    <link href="src\styles\styleIndex.css" rel="stylesheet">
+    <link href="../src/styles/styleIndex.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    <link href="src/styles/sign-in.css" rel="stylesheet">
-    <title>Nuevo Préstamo | Xocheco</title>
+    <link href="../src/styles/sign-in.css" rel="stylesheet">
+    <title>Nueva Editorial | Xocheco</title>
 </head>
 
 <body>
@@ -103,7 +91,6 @@ $result_users = mysqli_query($conn, $query_users) or die("Error SQL in Users: " 
                     <li class="nav-item">
                         <a class="nav-link" href="loans.php">Préstamos</a>
                     </li>
-                    <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario') { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="users.php">Usuarios</a>
                     </li>
@@ -113,7 +100,6 @@ $result_users = mysqli_query($conn, $query_users) or die("Error SQL in Users: " 
                     <li class="nav-item">
                         <a class="nav-link" href="inventary.php">Inventario</a>
                     </li>
-                    <?php } ?>
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -126,48 +112,25 @@ $result_users = mysqli_query($conn, $query_users) or die("Error SQL in Users: " 
     <main class="form-signin w-100 m-auto">
         <form action="" method="POST">
             <div style="text-align: center;">
-                <a href="index.php">
-                    <img class="mb-4" src="src\Images\Logo.png" alt="" width="72" height="57">
+                <a href="../index.php">
+                    <img class="mb-4" src="../src/Images/Logo.png" alt="" width="72" height="57">
                 </a>
-                <h1 class="h3 mb-3 fw-normal">Nuevo Préstamo</h1>
-                <p class="text-muted">Selecciona el libro, el usuario y el sistema hará el resto.</p>
+                <h1 class="h3 mb-3 fw-normal">Nueva Editorial</h1>
+                <p class="mb-3">Ingresa el nombre de la editorial que deseas agregar.</p>
             </div>
 
             <?php echo $alert_message; ?>
 
-            <div class= "row g-3 mt-2">
-                <div class= "col-md-12 form-floating">
-                    <select class= "form-select" id="copy" name="copy" required>
-                        <option value="" disabled selected>Selecciona un libro disponible</option>
-                        <?php while ($copy = mysqli_fetch_assoc($result_copies)) { ?>
-                            <option value="<?php echo $copy['id_copy']; ?>">
-                                [ID: <?php echo $copy['id_copy']; ?>] - <?php echo $copy['title']; ?> (<?php echo $copy['edition']; ?>) - Cód: <?php echo $copy['code']; ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                    <label for="copy">Libro a prestar</label>
-                </div>
-
-                <div class= "col-md-12 form-floating">
-                    <select class= "form-select" id="user" name="user" required>
-                        <option value="" disabled selected>Selecciona un usuario</option>
-                        <?php while ($user = mysqli_fetch_assoc($result_users)) { ?>
-                            <option value="<?php echo $user['id_user']; ?>">
-                                [ID: <?php echo $user['id_user']; ?>] - <?php echo $user['name'] . ' ' . $user['last_name']; ?> (<?php echo $user['email']; ?>)
-                            </option>
-                        <?php } ?>
-                    </select>
-                    <label for="user">Usuario que solicita el préstamo</label>
-                </div>
-
-                <div class="col-md-12 form-floating">
-                    <input type="number" class="form-control" id="reservation" name="reservation" placeholder="Ej. 15">
-                    <label for="reservation">ID de Reserva (opcional)</label>
+            <div class="cointainer-fluid bg-light">
+                <div class="row">
+                    <div class="col-md-12 form-floating">
+                        <input type="text" class="form-control" id="floatingInput" name="publisher_name">
+                        <label for="floatingInput">Nombre</label>
+                    </div>
                 </div>
             </div>
-
-            <button class="btn btn-success w-100 py-2" type="submit">Crear Préstamo</button>
-            <a href="loans.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver a Préstamos</a>
+            <button class="btn btn-success w-100 py-2 mt-4" type="submit">Guardar Editorial</button>
+            <a href="../authors-publishers.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver al catálogo</a>
         </form>
     </main>
 

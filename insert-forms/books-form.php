@@ -2,18 +2,18 @@
 session_start();
 //Verify if user is logged in
 if (!isset($_SESSION['id_user'])) {
-    header("Location: signin.php");
+    header("Location: ../signin.php");
     exit();
 }
 
 //Verify if user has permission to access this page, if not, redirect to index.php
 $rol = $_SESSION['rol'] ?? '';
 if ($rol !== 'admin' && $rol !== 'bibliotecario' && $rol !== 'Administrador' && $rol !== 'Bibliotecario') {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 
-include('src/conexion/conexion.php');
+include('../src/conexion/conexion.php');
 
 $alert_message = "";
 
@@ -84,12 +84,12 @@ $result_genres = mysqli_query($conn, "SELECT id_genre, name FROM genres ORDER BY
 
     <link rel="icon" type="image/png" href="src/Images/Icon-Simp.png">
 
-    <link href="src\styles\styleIndex.css" rel="stylesheet">
+    <link href="../src/styles/styleIndex.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    <link href="src/styles/sign-in.css" rel="stylesheet">
+    <link href="../src/styles/sign-in.css" rel="stylesheet">
     <title>Nuevo Libro | Xocheco</title>
 </head>
 
@@ -135,8 +135,8 @@ $result_genres = mysqli_query($conn, "SELECT id_genre, name FROM genres ORDER BY
     <main class="w-100 m-auto mt-5" style="max-width: 800px; padding: 15px;">
         <form action="" method="POST">
             <div style="text-align: center;">
-                <a href="index.php">
-                    <img class="mb-4" src="src\Images\Logo.png" alt="" width="72" height="57">
+                <a href="../index.php">
+                    <img class="mb-4" src="../src/Images/Logo.png" alt="" width="72" height="57">
                 </a>
                 <h1 class="h3 mb-3 fw-normal">Agrega un nuevo libro</h1>
                 <p class="text-muted">Inserta los datos del nuevo libro</p>
@@ -195,7 +195,7 @@ $result_genres = mysqli_query($conn, "SELECT id_genre, name FROM genres ORDER BY
             </div>
 
             <button class="btn btn-success w-100 py-2 mt-4" type="submit">Guardar Libro</button>
-            <a href="books.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver al catálogo</a>
+            <a href="../books.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver al catálogo</a>
         </form>
     </main>
 

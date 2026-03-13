@@ -3,7 +3,7 @@ session_start();
 
 // Verify user privileges
 if (!isset($_SESSION['id_user'])) {
-    header("Location: signin.php");
+    header("Location: ../signin.php");
     exit();
 }
 $role = $_SESSION['rol'] ?? '';
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             
             echo "<script>
-                    alert('Book updated successfully!'); 
+                    alert('¡Los libros se actualizaron correctamente!'); 
                     window.location.href='../books.php';
                   </script>";
             exit();
@@ -111,7 +111,8 @@ $result_genres = mysqli_query($conn, "SELECT id_genre, name FROM genres ORDER BY
     <title>Actualizar Libro | Xocheco</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="../src/Images/Icon-Simp.png">
-    <link href="src\styles\styleIndex.css" rel="stylesheet">
+    <link href="../src/styles/styleIndex.css" rel="stylesheet">
+    <link href="../src/styles/sign-in.css" rel="stylesheet">
 </head>
 
 <body>

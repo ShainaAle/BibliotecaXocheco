@@ -3,11 +3,11 @@ session_start();
 
 // 1. Verify user session
 if (!isset($_SESSION['id_user'])) {
-    header("Location: signin.php");
+    header("Location: ../signin.php");
     exit();
 }
 
-include("src/conexion/conexion.php");
+include("../src/conexion/conexion.php");
 
 $alert_message = "";
 $id_user = (int)$_SESSION['id_user'];
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (mysqli_query($conn, $insert_query)) {
                 echo "<script>
                         alert('¡Reservación solicitada exitosamente! Puedes ver el estado en tu panel.'); 
-                        window.location.href='bookings.php';
+                        window.location.href='../bookings.php';
                       </script>";
                 exit();
             } else {
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $id_book_get = isset($_GET['id_book']) ? (int)$_GET['id_book'] : (isset($_POST['id_book']) ? (int)$_POST['id_book'] : 0);
 
 if ($id_book_get === 0) {
-    header("Location: books.php");
+    header("Location: ../books.php");
     exit();
 }
 
@@ -60,7 +60,7 @@ $result_book = mysqli_query($conn, $query_book);
 
 if (mysqli_num_rows($result_book) == 0) {
     // If someone changes the ID in the URL to a book that doesn't exist
-    header("Location: books.php");
+    header("Location: ../books.php");
     exit();
 }
 
@@ -76,7 +76,8 @@ $book = mysqli_fetch_assoc($result_book);
 
     <title>Confirmar Reservación | Xocheco</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="src\styles\styleIndex.css" rel="stylesheet">
+    <link href="../src/styles/styleIndex.css" rel="stylesheet">
+    <link href="../src/styles/sign-in.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
@@ -124,7 +125,7 @@ $book = mysqli_fetch_assoc($result_book);
 
             <div class="d-grid gap-2 mt-4">
                 <button class="btn btn-success py-2" type="submit">Confirmar Solicitud</button>
-                <a href="books.php" class="btn btn-outline-secondary py-2">Cancelar y volver al catálogo</a>
+                <a href="../bookings.php" class="btn btn-outline-secondary py-2">Cancelar y volver al catálogo</a>
             </div>
         </form>
     </main>

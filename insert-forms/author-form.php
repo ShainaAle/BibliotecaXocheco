@@ -9,34 +9,34 @@ if (!isset($_SESSION['id_user'])) {
 //Verify if user has permission to access this page, if not, redirect to index.php
 $rol = $_SESSION['rol'] ?? '';
 if ($rol !== 'admin' && $rol !== 'bibliotecario' && $rol !== 'Administrador' && $rol !== 'Bibliotecario') {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 
-include('src/conexion/conexion.php');
+include('../src/conexion/conexion.php');
 
 $alert_message = "";
 
 //Insert processing
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Verify that name is not empty
-    if (empty($publisher_name = mysqli_real_escape_string($conn, $_POST['publisher_name']))) {
-        $alert_message = "<div class='alert alert-danger mt-3'>El nombre de la editorial es obligatorio.</div>";
+    if (empty($author_name = mysqli_real_escape_string($conn, $_POST['autor_name']))) {
+        $alert_message = "<div class='alert alert-danger mt-3'>El nombre del autor es obligatorio.</div>";
     } else {
-        // Check if publisher with the same name already exists to prevent duplicates
-        $publisher_check_query = "SELECT id_publisher FROM publishers WHERE name = '$publisher_name'";
-        $publisher_check_result = mysqli_query($conn, $publisher_check_query);
+        // Check if author with the same name already exists to prevent duplicates
+        $author_check_query = "SELECT id_author FROM authors WHERE full_name = '$author_name'";
+        $author_check_result = mysqli_query($conn, $author_check_query);
 
-        if (mysqli_num_rows($publisher_check_result) > 0) {
-            $alert_message = "<div class='alert alert-danger mt-3'>La editorial ya existe en la base de datos. Por favor, ingresa una editorial única.</div>";
+        if (mysqli_num_rows($author_check_result) > 0) {
+            $alert_message = "<div class='alert alert-danger mt-3'>El autor ya existe en la base de datos. Por favor, ingresa un autor único.</div>";
         } else {
-            // Insert the new publisher into the database
-            $query_publishers = "INSERT INTO publishers (name) VALUES ('$publisher_name')";
+            // Insert the new author into the database
+            $query_authors = "INSERT INTO authors (full_name) VALUES ('$author_name')";
 
-            if (mysqli_query($conn, $query_publishers)) {
-                $alert_message = "<div class='alert alert-success mt-3'>¡Editorial registrada exitosamente!</div>";
+            if (mysqli_query($conn, $query_authors)) {
+                $alert_message = "<div class='alert alert-success mt-3'>¡Autor registrado exitosamente!</div>";
             } else {
-                $alert_message = "<div class='alert alert-danger mt-3'>Error al guardar la editorial: " . mysqli_error($conn) . "</div>";
+                $alert_message = "<div class='alert alert-danger mt-3'>Error al guardar el autor: " . mysqli_error($conn) . "</div>";
             }
         }
     }
@@ -58,13 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <link rel="icon" type="image/png" href="src/Images/Icon-Simp.png">
 
-    <link href="src\styles\styleIndex.css" rel="stylesheet">
+    <link href="../src/styles/styleIndex.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    <link href="src/styles/sign-in.css" rel="stylesheet">
-    <title>Nueva Editorial | Xocheco</title>
+    <link href="../src/styles/sign-in.css" rel="stylesheet">
+    <title>Nuevo Autor | Xocheco</title>
 </head>
 
 <body>
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <a href="index.php" class="logo">
                 <img src="src/Images/Icon-Simp.png" alt="Logo" style="height: 40px;">
             </a>
-            <a class="navbar-brand" href="index.php">Xocheco</a>
+            <a class="navbar-brand" href="../index.php">Xocheco</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.php">Inicio</a>
+                        <a class="nav-link active" aria-current="page" href="../index.php">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="books.php">Libros</a>
@@ -113,10 +113,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form action="" method="POST">
             <div style="text-align: center;">
                 <a href="index.php">
-                    <img class="mb-4" src="src\Images\Logo.png" alt="" width="72" height="57">
+                    <img class="mb-4" src="../src/Images/Logo.png" alt="" width="72" height="57">
                 </a>
-                <h1 class="h3 mb-3 fw-normal">Nueva Editorial</h1>
-                <p class="mb-3">Ingresa el nombre de la editorial que deseas agregar.</p>
+                <h1 class="h3 mb-3 fw-normal">Nuevo autor</h1>
+                <p class="mb-3">Ingresa el nombre completo del autor que deseas agregar.</p>
             </div>
 
             <?php echo $alert_message; ?>
@@ -124,13 +124,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="cointainer-fluid bg-light">
                 <div class="row">
                     <div class="col-md-12 form-floating">
-                        <input type="text" class="form-control" id="floatingInput" name="publisher_name">
+                        <input type="text" class="form-control" id="floatingInput" name="autor_name">
                         <label for="floatingInput">Nombre</label>
                     </div>
                 </div>
             </div>
-            <button class="btn btn-success w-100 py-2 mt-4" type="submit">Guardar Editorial</button>
-            <a href="authors-publishers.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver al catálogo</a>
+            <button class="btn btn-success w-100 py-2 mt-4" type="submit">Guardar Autor</button>
+            <a href="../authors-publishers.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver al catálogo</a>
         </form>
     </main>
 
