@@ -42,7 +42,7 @@ $copy_result = mysqli_query($conn, $copy_query) or die("Error al ejecutar la con
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <link href="src\styles\styleIndex.css" rel="stylesheet">
+    <link href="src/styles/styleIndex.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -104,7 +104,7 @@ $copy_result = mysqli_query($conn, $copy_query) or die("Error al ejecutar la con
     <h1 class="mb-4">Ejemplares</h1>
     <form action="backend/copies-process.php" method="POST">
         <div class="mb-3">
-            <a href="copy-form.php" class="btn btn-sm btn-success me-2">Nuevo ejemplar</a>
+            <a href="insert-forms/copy-form.php" class="btn btn-sm btn-success me-2">Nuevo ejemplar</a>
             <button type="submit" name="action" value="modify" class="btn btn-sm btn-warning me-2">Modificar Seleccionados</button>
             <button type="submit" name="action" value="delete" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar los ejemplares seleccionados?');">Eliminar Seleccionados</button>
         </div>

@@ -9,11 +9,11 @@ if (!isset($_SESSION['id_user'])) {
 //Verify if user has permission to access this page, if not, redirect to index.php
 $rol = $_SESSION['rol'] ?? '';
 if ($rol !== 'admin' && $rol !== 'bibliotecario' && $rol !== 'Administrador' && $rol !== 'Bibliotecario') {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 
-include('src/conexion/conexion.php');
+include('../src/conexion/conexion.php');
 
 $alert_message = "";
 
@@ -56,12 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <link href="src\styles\styleIndex.css" rel="stylesheet">
+    <link href="../src/styles/styleIndex.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    <link href="src/styles/sign-in.css" rel="stylesheet">
+    <link href="../src/styles/sign-in.css" rel="stylesheet">
     <title>Nuevo Autor | Xocheco</title>
 </head>
 
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Nav Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">Xocheco</a>
+            <a class="navbar-brand" href="../index.php">Xocheco</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.php">Inicio</a>
+                        <a class="nav-link active" aria-current="page" href="../index.php">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="books.php">Libros</a>
@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form action="" method="POST">
             <div style="text-align: center;">
                 <a href="index.php">
-                    <img class="mb-4" src="src\Images\Logo.png" alt="" width="72" height="57">
+                    <img class="mb-4" src="../src/Images/Logo.png" alt="" width="72" height="57">
                 </a>
                 <h1 class="h3 mb-3 fw-normal">Nuevo autor</h1>
                 <p class="mb-3">Ingresa el nombre completo del autor que deseas agregar.</p>
@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
             <button class="btn btn-success w-100 py-2 mt-4" type="submit">Guardar Autor</button>
-            <a href="authors-publishers.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver al catálogo</a>
+            <a href="../authors-publishers.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver al catálogo</a>
         </form>
     </main>
 

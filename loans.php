@@ -80,7 +80,7 @@ $fines_result = mysqli_query($conn, $fines_query);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <link href="src\styles\styleIndex.css" rel="stylesheet">
+    <link href="src/styles/styleIndex.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -144,10 +144,10 @@ $fines_result = mysqli_query($conn, $fines_query);
         <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
         <div class="row">
             <div class="col-md-2 p-2 md-2">
-                <a href="loan-form.php" class="btn btn-sm btn-success" id="btnAgregar">Nuevo Préstamo</a>
+                <a href="insert-forms/loan-form.php" class="btn btn-sm btn-success" id="btnAgregar">Nuevo Préstamo</a>
             </div>
             <div class="col-md-3 p-2 md-2">
-                <button class="btn btn-sm btn-warning">Modificar Préstamo</button>
+                <a href="modify-forms/modify-loan.php" class="btn btn-sm btn-warning">Modificar Préstamo</a>
             </div>
         </div>
         <?php } ?>

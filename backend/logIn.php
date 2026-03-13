@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'src/conexion/conexion.php';
+require '../src/conexion/conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
@@ -41,22 +41,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             // 4. REDIRECCIÓN 
-            header("Location: index.php"); 
+            header("Location: ../index.php"); 
             exit();
 
         } else {
             // Contraseña incorrecta
-            header("Location: signin.php?error=1");
+            header("Location: ../signin.php?error=1");
             exit();
         }
     } else {
         // Usuario no existe o inactivo
-        header("Location: signin.php?error=1");
+        header("Location: ../signin.php?error=1");
         exit();
     }
 } else {
     // Si intentan entrar directo a login.php sin formulario
-    header("Location: signin.php");
+    header("Location: ../signin.php");
     exit();
 }
 ?>

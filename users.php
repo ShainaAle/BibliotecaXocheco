@@ -38,7 +38,7 @@ $users_result = mysqli_query($conn, $users_query) or die("Error al ejecutar la c
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <link href="src\styles\styleIndex.css" rel="stylesheet">
+    <link href="src/styles/styleIndex.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -100,7 +100,7 @@ $users_result = mysqli_query($conn, $users_query) or die("Error al ejecutar la c
     <h1 class="mb-4">Usuarios</h1>
     <form action="backend/users-process.php" method="POST">
         <div class="mb-3">
-            <a href="register-form.php" class="btn btn-sm btn-success me-2">Nuevo usuario</a>
+            <a href="insert-forms/register-form.php" class="btn btn-sm btn-success me-2">Nuevo usuario</a>
             <button type="submit" name="action" value="modify" class="btn btn-sm btn-warning me-2">Modificar Seleccionados</button>
         </div>
         <div class="table-responsive mb-5">

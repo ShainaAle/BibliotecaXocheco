@@ -17,6 +17,6 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 
 // 4. Redirigir al usuario al login o al index
-header("Location: signin.php");
+header("Location: ../signin.php");
 exit();
 ?>
