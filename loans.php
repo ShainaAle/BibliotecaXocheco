@@ -26,7 +26,7 @@ if ($user_role === 'Administrador' || $user_role === 'Bibliotecario' || $user_ro
         INNER JOIN copies c ON l.id_copy = c.id_copy
         INNER JOIN books b ON c.id_book = b.id_book
         INNER JOIN users u ON l.id_user = u.id_user
-        INNER JOIN returns r ON l.id_loan = r.id_loan
+        JOIN returns r ON l.id_loan = r.id_loan
         WHERE l.status IN ('Finalizado', 'Cancelado')";
 
     $fines_query = "SELECT f.id_fine, b.title, c.id_copy, CONCAT(u.name, ' ', u.last_name) as usuario, f.fine_date, f.amount, f.status, f.payment_date
@@ -88,6 +88,14 @@ $fines_result = mysqli_query($conn, $fines_query);
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
+    <script>
+        function toggleCheckboxes(source, className) {
+            checkboxes = document.getElementsByClassName(className);
+            for(var i=0, n=checkboxes.length;i<n;i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+    </script>
 
     <title>Préstamos | Xocheco</title>
 </head>
@@ -145,19 +153,6 @@ $fines_result = mysqli_query($conn, $fines_query);
             </div>
         </div>
     </nav>
-    <div class="container-fluid">
-        <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
-        <div class="row">
-            <div class="col-md-2 p-2 md-2">
-                <a href="insert-forms/loan-form.php" class="btn btn-sm btn-success" id="btnAgregar">Nuevo Préstamo</a>
-            </div>
-            <div class="col-md-3 p-2 md-2">
-                <a href="modify-forms/modify-loan.php" class="btn btn-sm btn-warning">Modificar Préstamo</a>
-            </div>
-        </div>
-        <?php } ?>
-    </div>
-
     <h1 class="my-4">Multas</h1>
     <div class="table-responsive mb-5">
         <table class="table table-striped table-bordered align-middle">
@@ -205,7 +200,17 @@ $fines_result = mysqli_query($conn, $fines_query);
         </table>
     </div>
 
+    <form action="backend/loans-process.php" method="POST">
     <h1 class="my-4">Préstamos activos</h1>
+    <div class="container-fluid">
+        <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
+        <div class="mb-3">
+            <a href="insert-forms/loan-form.php" class="btn btn-sm btn-success">Nuevo Préstamo</a>
+            <button type="submit" name="action" value="modify" class="btn btn-sm btn-warning">Modificar Seleccionados</button>
+        </div>
+        <?php } ?>
+    </div>
+    
     <div class="table-responsive mb-5">
         <table class="table table-striped table-bordered align-middle">
             <thead class="table-dark">
@@ -228,7 +233,7 @@ $fines_result = mysqli_query($conn, $fines_query);
             <?php while ($fila = mysqli_fetch_assoc($active_result)) { ?>
                 <tr>
                     <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
-                    <td><input type="checkbox" class="selectItem"></td>
+                    <td><input type="checkbox" name="loan_ids[]" value="<?php echo $fila['id_loan']; ?>" class="selectItem"></td>
                     <?php } ?>
                     <td><?php echo $fila['id_loan']; ?></td>
                     <td><?php echo $fila['title']; ?></td>
@@ -239,7 +244,7 @@ $fines_result = mysqli_query($conn, $fines_query);
                     <td><?php echo $fila['start_date']; ?></td>
                     <td><?php echo $fila['return_deadline']; ?></td>
                     <td>
-                        <?php 
+                        <?php
                         $badge_class = ($fila['status'] == 'Activo') ? 'bg-success' : 'bg-warning text-dark';
                         ?>
                         <span class="badge <?php echo $badge_class; ?>"><?php echo $fila['status']; ?></span>
@@ -249,15 +254,13 @@ $fines_result = mysqli_query($conn, $fines_query);
             </tbody>
         </table>
     </div>
+</form>
 
     <h1 class="mb-4">Historial de préstamos</h1>
     <div class="table-responsive mb-5">
         <table class="table table-striped table-bordered align-middle">
             <thead class="table-dark">
                 <tr>
-                    <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
-                    <th><input type="checkbox" id="selectAll"></th>
-                    <?php } ?>
                     <th>ID</th>
                     <th>Libro</th>
                     <th>No. Ejemplar</th>
@@ -272,9 +275,6 @@ $fines_result = mysqli_query($conn, $fines_query);
             <tbody>
             <?php while ($fila = mysqli_fetch_assoc($historical_result)) { ?>
                 <tr>
-                    <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
-                    <td><input type="checkbox" class="selectItem"></td>
-                    <?php } ?>
                     <td><?php echo $fila['id_loan']; ?></td>
                     <td><?php echo $fila['title']; ?></td>
                     <td><?php echo $fila['id_copy']; ?></td>

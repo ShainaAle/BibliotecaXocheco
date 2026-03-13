@@ -13,7 +13,6 @@ if ($role !== 'admin' && $role !== 'Administrador' && $role !== 'bibliotecario' 
     exit();
 }
 
-// Fixed path for connection if this file is inside /backend
 include("../src/conexion/conexion.php");
 
 // 2. Process the incoming form data
