@@ -96,12 +96,16 @@ if (mysqli_num_rows($result_copies) == 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Editar Ejemplares | Xocheco</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../src/Images/Icon-Simp.png">
     <link href="../src/styles/styleIndex.css" rel="stylesheet">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+            <a href="index.php" class="logo">
+                <img src="../src/Images/Icon-Simp.png" alt="Logo" style="height: 40px;">
+            </a>
             <a class="navbar-brand" href="../index.php">Xocheco</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -120,7 +124,7 @@ if (mysqli_num_rows($result_copies) == 0) {
                         <a class="nav-link" href="../loans.php">Préstamos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../UsersView.html">Usuarios</a>
+                        <a class="nav-link" href="../users.php">Usuarios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../authors-publishers.php">Autores y Editoriales</a>

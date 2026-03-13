@@ -16,6 +16,8 @@ include("src/conexion/conexion.php");
 
     <link href="src\styles\styleIndex.css" rel="stylesheet">
 
+        <link rel="icon" type="image/png" href="src/Images/Icon-Simp.png">
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
@@ -29,6 +31,9 @@ include("src/conexion/conexion.php");
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+            <a href="index.php" class="logo">
+                <img src="src/Images/Icon-Simp.png" alt="Logo" style="height: 40px;">
+            </a>
             <a class="navbar-brand" href="index.php">Xocheco</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -37,25 +42,26 @@ include("src/conexion/conexion.php");
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
+                    <img src="src/Images/nav-divider.png" class="nav-sep">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="index.php">Inicio</a>
-                    </li>
+                    </li><img src="src/Images/nav-divider.png" class="nav-sep">
                     <li class="nav-item">
                         <a class="nav-link" href="books.php">Libros</a>
-                    </li>
+                    </li><img src="src/Images/nav-divider.png" class="nav-sep">
                     <li class="nav-item">
                         <a class="nav-link" href="loans.php">Préstamos</a>
-                    </li>
+                    </li><img src="src/Images/nav-divider.png" class="nav-sep">
                     <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin') { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="UsersView.html">Usuarios</a>
-                    </li>
+                        <a class="nav-link" href="users.php">Usuarios</a>
+                    </li><img src="src/Images/nav-divider.png" class="nav-sep">
                     <li class="nav-item">
                         <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>
-                    </li>
+                    </li><img src="src/Images/nav-divider.png" class="nav-sep">
                     <li class="nav-item">
                         <a class="nav-link" href="inventary.php">Inventario</a>
-                    </li>
+                    </li><img src="src/Images/nav-divider.png" class="nav-sep">
                     <?php } ?>
                 </ul>
                 <div class="d-flex">
@@ -153,3 +159,27 @@ include("src/conexion/conexion.php");
     </footer>
 </body>
 </html>
+
+<script>
+    document.addEventListener('mousemove', (e) => {
+        document.querySelectorAll('.nav-sep').forEach(sep => {
+            const rect = sep.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const distance = Math.sqrt(
+                Math.pow(e.clientX - centerX, 2) + 
+                Math.pow(e.clientY - centerY, 2)
+            );
+            
+            const maxDistance = 80; // distancia máxima en px para que aparezca
+            
+            if (distance < maxDistance) {
+                const opacity = 0.5 - (distance / maxDistance);
+                sep.style.opacity = opacity;
+            } else {
+                sep.style.opacity = 0;
+            }
+        });
+    });
+</script>

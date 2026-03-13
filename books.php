@@ -26,17 +26,22 @@ $result = $conn->query($sql);
 
     <link href="src\styles\styleIndex.css" rel="stylesheet">
 
+    <link rel="icon" type="image/png" href="src/Images/Icon-Simp.png">
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-    <title>Libros</title>
+    <title>Libros | Xocheco</title>
 </head>
 
 <body>
     <!-- Nav Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+            <a href="index.php" class="logo">
+                <img src="src/Images/Icon-Simp.png" alt="Logo" style="height: 40px;">
+            </a>
             <a class="navbar-brand" href="index.php">Xocheco</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -56,7 +61,7 @@ $result = $conn->query($sql);
                     </li>
                     <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin') { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="UsersView.html">Usuarios</a>
+                        <a class="nav-link" href="users.php">Usuarios</a>
                     </li>
                     <?php } ?>
                     <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>

@@ -1,10 +1,10 @@
 <?php
-session_start(); // Iniciar para poder destruir
+session_start(); // Start to destroy
 
-// 1. Destruir todas las variables de sesión
+// 1. Destroy every session variable
 $_SESSION = array();
 
-// 2. Borrar la cookie de sesión (si existe)
+// 2. Delete the cookie (if exist)
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
     setcookie(session_name(), '', time() - 42000,
@@ -13,10 +13,10 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
-// 3. Destruir la sesión completamente
+// 3. Destroy the session
 session_destroy();
 
-// 4. Redirigir al usuario al login o al index
+// 4. Redirect to login/index
 header("Location: signin.php");
 exit();
 ?>

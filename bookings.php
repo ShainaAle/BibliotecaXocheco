@@ -38,6 +38,8 @@ $result_bookings = mysqli_query($conn, $query_bookings) or die("Error SQL: " . m
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="src/Images/Icon-Simp.png">
+
     <title>Reservaciones | Xocheco</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="src\styles\styleIndex.css" rel="stylesheet">
@@ -56,6 +58,9 @@ $result_bookings = mysqli_query($conn, $query_bookings) or die("Error SQL: " . m
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container-fluid">
+            <a href="index.php" class="logo">
+                <img src="src/Images/Icon-Simp.png" alt="Logo" style="height: 40px;">
+            </a>
             <a class="navbar-brand" href="index.php">Xocheco</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
                 <span class="navbar-toggler-icon"></span>

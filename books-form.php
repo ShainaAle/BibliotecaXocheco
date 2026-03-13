@@ -82,18 +82,23 @@ $result_genres = mysqli_query($conn, "SELECT id_genre, name FROM genres ORDER BY
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+    <link rel="icon" type="image/png" href="src/Images/Icon-Simp.png">
+
     <link href="src\styles\styleIndex.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <link href="src/styles/sign-in.css" rel="stylesheet">
-    <title>Nuevo Libro</title>
+    <title>Nuevo Libro | Xocheco</title>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+            <a href="index.php" class="logo">
+                <img src="src/Images/Icon-Simp.png" alt="Logo" style="height: 40px;">
+            </a>
             <a class="navbar-brand" href="index.php">Xocheco</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -113,7 +118,7 @@ $result_genres = mysqli_query($conn, "SELECT id_genre, name FROM genres ORDER BY
                     </li>
                     <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'Administrador' || $_SESSION['rol'] === 'bibliotecario' || $_SESSION['rol'] === 'Bibliotecario')) { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="UsersView.html">Usuarios</a>
+                        <a class="nav-link" href="users.php">Usuarios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>

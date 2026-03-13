@@ -38,6 +38,8 @@ $users_result = mysqli_query($conn, $users_query) or die("Error al ejecutar la c
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+    <link rel="icon" type="image/png" href="src/Images/Icon-Simp.png">
+
     <link href="src\styles\styleIndex.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -60,6 +62,9 @@ $users_result = mysqli_query($conn, $users_query) or die("Error al ejecutar la c
     <!-- Nav Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+            <a href="index.php" class="logo">
+                <img src="src/Images/Icon-Simp.png" alt="Logo" style="height: 40px;">
+            </a>
             <a class="navbar-brand" href="index.php">Xocheco</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -81,7 +86,7 @@ $users_result = mysqli_query($conn, $users_query) or die("Error al ejecutar la c
                         <a class="nav-link" href="prestamosView.php">Préstamos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="UsersView.html">Usuarios</a>
+                        <a class="nav-link" href="users.php">Usuarios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>
