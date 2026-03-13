@@ -9,34 +9,34 @@ if (!isset($_SESSION['id_user'])) {
 //Verify if user has permission to access this page, if not, redirect to index.php
 $rol = $_SESSION['rol'] ?? '';
 if ($rol !== 'admin' && $rol !== 'bibliotecario' && $rol !== 'Administrador' && $rol !== 'Bibliotecario') {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 
-include('src/conexion/conexion.php');
+include('../src/conexion/conexion.php');
 
 $alert_message = "";
 
 //Insert processing
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Verify that name is not empty
-    if (empty($genre_name = mysqli_real_escape_string($conn, $_POST['genre_name']))) {
-        $alert_message = "<div class='alert alert-danger mt-3'>El nombre del género es obligatorio.</div>";
+    if (empty($author_name = mysqli_real_escape_string($conn, $_POST['autor_name']))) {
+        $alert_message = "<div class='alert alert-danger mt-3'>El nombre del autor es obligatorio.</div>";
     } else {
-        // Check if genre with the same name already exists to prevent duplicates
-        $genre_check_query = "SELECT id_genre FROM genres WHERE name = '$genre_name'";
-        $genre_check_result = mysqli_query($conn, $genre_check_query);
+        // Check if author with the same name already exists to prevent duplicates
+        $author_check_query = "SELECT id_author FROM authors WHERE full_name = '$author_name'";
+        $author_check_result = mysqli_query($conn, $author_check_query);
 
-        if (mysqli_num_rows($genre_check_result) > 0) {
-            $alert_message = "<div class='alert alert-danger mt-3'>El género ya existe en la base de datos. Por favor, ingresa un género único.</div>";
+        if (mysqli_num_rows($author_check_result) > 0) {
+            $alert_message = "<div class='alert alert-danger mt-3'>El autor ya existe en la base de datos. Por favor, ingresa un autor único.</div>";
         } else {
-            // Insert the new genre into the database
-            $query_genres = "INSERT INTO genres (name) VALUES ('$genre_name')";
+            // Insert the new author into the database
+            $query_authors = "INSERT INTO authors (full_name) VALUES ('$author_name')";
 
-            if (mysqli_query($conn, $query_genres)) {
-                $alert_message = "<div class='alert alert-success mt-3'>¡Género registrado exitosamente!</div>";
+            if (mysqli_query($conn, $query_authors)) {
+                $alert_message = "<div class='alert alert-success mt-3'>¡Autor registrado exitosamente!</div>";
             } else {
-                $alert_message = "<div class='alert alert-danger mt-3'>Error al guardar el género: " . mysqli_error($conn) . "</div>";
+                $alert_message = "<div class='alert alert-danger mt-3'>Error al guardar el autor: " . mysqli_error($conn) . "</div>";
             }
         }
     }
@@ -56,20 +56,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <link href="src\styles\styleIndex.css" rel="stylesheet">
+    <link href="../src/styles/styleIndex.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    <link href="src/styles/sign-in.css" rel="stylesheet">
-    <title>Nuevo Género</title>
+    <link href="../src/styles/sign-in.css" rel="stylesheet">
+    <title>Nuevo Autor | Xocheco</title>
 </head>
 
 <body>
     <!-- Nav Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">Xocheco</a>
+            <a class="navbar-brand" href="../index.php">Xocheco</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.php">Inicio</a>
+                        <a class="nav-link active" aria-current="page" href="../index.php">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="books.php">Libros</a>
@@ -86,7 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <li class="nav-item">
                         <a class="nav-link" href="loans.php">Préstamos</a>
                     </li>
-                    <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin') { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="UsersView.html">Usuarios</a>
                     </li>
@@ -96,7 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <li class="nav-item">
                         <a class="nav-link" href="inventary.php">Inventario</a>
                     </li>
-                    <?php } ?>
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -110,10 +108,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form action="" method="POST">
             <div style="text-align: center;">
                 <a href="index.php">
-                    <img class="mb-4" src="src\Images\Logo.png" alt="" width="72" height="57">
+                    <img class="mb-4" src="../src/Images/Logo.png" alt="" width="72" height="57">
                 </a>
-                <h1 class="h3 mb-3 fw-normal">Nuevo Género</h1>
-                <p class="mb-3">Ingresa el nombre del género que deseas agregar.</p>
+                <h1 class="h3 mb-3 fw-normal">Nuevo autor</h1>
+                <p class="mb-3">Ingresa el nombre completo del autor que deseas agregar.</p>
             </div>
 
             <?php echo $alert_message; ?>
@@ -121,13 +119,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="cointainer-fluid bg-light">
                 <div class="row">
                     <div class="col-md-12 form-floating">
-                        <input type="text" class="form-control" id="floatingInput" name="genre_name">
+                        <input type="text" class="form-control" id="floatingInput" name="autor_name">
                         <label for="floatingInput">Nombre</label>
                     </div>
                 </div>
             </div>
-            <button class="btn btn-success w-100 py-2 mt-4" type="submit">Guardar Género</button>
-            <a href="authors-publishers.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver al catálogo</a>
+            <button class="btn btn-success w-100 py-2 mt-4" type="submit">Guardar Autor</button>
+            <a href="../authors-publishers.php" class="btn btn-danger w-100 py-2 mt-2">Cancelar y volver al catálogo</a>
         </form>
     </main>
 

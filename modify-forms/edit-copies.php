@@ -97,6 +97,7 @@ if (mysqli_num_rows($result_copies) == 0) {
     <title>Editar Ejemplares | Xocheco</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../src/styles/styleIndex.css" rel="stylesheet">
+    <link href="../src/styles/sign-in.css" rel="stylesheet">
 </head>
 
 <body>
@@ -148,8 +149,8 @@ if (mysqli_num_rows($result_copies) == 0) {
     <main class="container mt-5 mb-5" style="max-width: 900px;">
         <form action="" method="POST">
             <div style="text-align: center;">
-                <a href="index.php">
-                    <img class="mb-4" src="..\src\Images\Logo.png" alt="" width="72" height="57">
+                <a href="../index.php">
+                    <img class="mb-4" src="../src/Images/Logo.png" alt="" width="72" height="57">
                 </a>
                 <h1 class="h3 mb-3 fw-normal">Actualizar Ejemplares</h1>
                 <p class="mb-3">Modifica la ubicación, estado o notas de los ejemplares físicos.</p>
@@ -196,8 +197,8 @@ if (mysqli_num_rows($result_copies) == 0) {
             </div>
 
             <div class="d-flex justify-content-end mt-4">
-                <a href="../inventary.php" class="btn btn-outline-secondary me-2">Cancelar</a>
                 <button type="submit" class="btn btn-warning px-4">Guardar Cambios</button>
+                <a href="../inventary.php" class="btn btn-outline-secondary me-2">Cancelar</a>
             </div>
         </form>
     </main>

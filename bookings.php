@@ -40,8 +40,9 @@ $result_bookings = mysqli_query($conn, $query_bookings) or die("Error SQL: " . m
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Reservaciones | Xocheco</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="src\styles\styleIndex.css" rel="stylesheet">
+    <link href="src/styles/styleIndex.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="/src/styles/sign-in.css" rel="stylesheet">
     
     <script>
         function toggleCheckboxes(source, className) {
@@ -97,7 +98,7 @@ $result_bookings = mysqli_query($conn, $query_bookings) or die("Error SQL: " . m
                         Aprobar y Convertir a Préstamo
                     </button>
                 <?php } else { ?>
-                    <a href="books.php" class="btn btn-primary btn-sm">Nueva Reservación</a>
+                    <a href="insert-forms\bookings-form.php" class="btn btn-primary btn-sm">Nueva Reservación</a>
                 <?php } ?>
                 
                 <button type="submit" name="action" value="cancel" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas cancelar las reservaciones seleccionadas?');">
