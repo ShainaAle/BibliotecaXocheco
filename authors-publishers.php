@@ -32,6 +32,8 @@ $publishers_result = mysqli_query($conn, $publishers_query);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+    <link rel="icon" type="image/png" href="src/Images/Icon-Simp.png">
+
     <link href="src/styles/styleIndex.css" rel="stylesheet">
     <link href="/src/styles/sign-in.css" rel="stylesheet">
 
@@ -48,13 +50,16 @@ $publishers_result = mysqli_query($conn, $publishers_query);
         }
     </script>
 
-    <title>Autores y Editoriales</title>
+    <title>Autores y Editoriales | Xocheco</title>
 </head>
 
 <body>
     <!-- Nav Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+            <a href="index.php" class="logo">
+                <img src="src/Images/Icon-Simp.png" alt="Logo" style="height: 40px;">
+            </a>
             <a class="navbar-brand" href="index.php">Xocheco</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -73,7 +78,7 @@ $publishers_result = mysqli_query($conn, $publishers_query);
                         <a class="nav-link" href="loans.php">Préstamos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="UsersView.html">Usuarios</a>
+                        <a class="nav-link" href="users.php">Usuarios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="authors-publishers.php">Autores y Editoriales</a>
