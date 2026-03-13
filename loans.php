@@ -224,9 +224,8 @@ $fines_result = mysqli_query($conn, $fines_query);
                     <th>Estado</th>
                 </tr>
             </thead>
-            <tbody>
-            <?php while ($fila = mysqli_fetch_assoc($active_result)) { ?>
-                <tr>
+                <tbody>
+                <?php while ($fila = mysqli_fetch_assoc($active_result)) { ?>
                     <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'bibliotecario')) { ?>
                     <td><input type="checkbox" class="selectItem"></td>
                     <?php } ?>
